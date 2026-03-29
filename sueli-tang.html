@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="CONBRIO.jpg">
+  <link rel="apple-touch-icon" href="CONBRIO.jpg">
+  <title>Sueli Tang to Open CONBRIO 2026 as Rohit Kshetri Bows Out - CONBRIO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary:#ff69b4; --primary-light:#ffb3d9; --primary-dark:#e91e63;
+      --secondary:#f8f9fa; --secondary-dark:#e9ecef;
+      --text:#2d3748; --text-light:#718096; --text-white:#ffffff;
+      --accent:#667eea; --accent-light:#9fbbf7;
+      --border:#e2e8f0; --border-light:#f7fafc;
+      --shadow:0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg:0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --font-d:'Playfair Display',serif; --font-b:'Cormorant Garamond',serif; --font-ui:'Montserrat',sans-serif;
+      --radius:8px; --radius-lg:12px;
+    }
+    html { scroll-behavior:smooth; scroll-padding-top:80px; }
+    body { background:linear-gradient(135deg, #fefefe 0%, #f8f9fa 100%); color:var(--text); font-family:var(--font-b); font-size:18px; line-height:1.75; overflow-x:hidden; cursor:auto; min-height:100vh; }
+    @media(min-width:1024px){ body{cursor:none;} }
+
+    /* ANIMATION KEYFRAMES */
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes slideInLeft{from{opacity:0;transform:translateX(-40px);}to{opacity:1;transform:translateX(0);}}
+    @keyframes slideInRight{from{opacity:0;transform:translateX(40px);}to{opacity:1;transform:translateX(0);}}
+    @keyframes scaleIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+    @keyframes glowPulseAnim{0%,100%{box-shadow:0 0 20px rgba(191,48,48,.3);}50%{box-shadow:0 0 40px rgba(191,48,48,.6);}}
+    @keyframes shimmerAnim{0%{background-position:-1000px 0;}100%{background-position:1000px 0;}}
+
+    .reveal-up{animation:fadeInUp .8s cubic-bezier(.34,.69,.46,1) forwards;opacity:0;}
+    .reveal-left{animation:slideInLeft .8s cubic-bezier(.34,.69,.46,1) forwards;opacity:0;}
+    .reveal-right{animation:slideInRight .8s cubic-bezier(.34,.69,.46,1) forwards;opacity:0;}
+    .reveal-scale{animation:scaleIn .8s cubic-bezier(.34,.69,.46,1) forwards;opacity:0;}
+    .cursor,.cursor-follower{display:none;}
+    @media(min-width:1024px){
+      .cursor{width:7px;height:7px;background:var(--primary);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;display:block;}
+      .cursor-follower{width:26px;height:26px;border:1px solid rgba(255,105,180,.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .1s ease,top .1s ease,width .25s,height .25s,border-color .25s;display:block;}
+      body:has(a:hover) .cursor,body:has(button:hover) .cursor{width:13px;height:13px;}
+      body:has(a:hover) .cursor-follower,body:has(button:hover) .cursor-follower{width:42px;height:42px;border-color:var(--primary);}
+    }
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.6rem 0;transition:background .4s,border-bottom .4s,padding .4s;}
+    nav.scrolled{background:rgba(255,255,255,.95);border-bottom:1px solid var(--border);padding:1rem 0;backdrop-filter:blur(18px);box-shadow:var(--shadow);}
+    .nav-inner{max-width:1260px;margin:0 auto;padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;}
+    .nav-logo{font-family:var(--font-d);font-size:1.4rem;font-weight:900;letter-spacing:.1em;text-decoration:none;color:var(--text);}
+    .nav-logo span{color:var(--primary);}
+    .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+    .nav-links a{font-family:var(--font-ui);font-size:.65rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--text-light);transition:color .2s;padding:.5rem;}
+    .nav-links a:hover{color:var(--primary);}
+    .nav-vote-btn{background:var(--primary)!important;color:#f8f6f3!important;padding:.5rem 1.3rem!important;border-radius:var(--radius);min-height:40px;display:flex;align-items:center;}
+    .nav-vote-btn:hover{background:var(--primary-dark)!important;}
+    .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;min-width:44px;min-height:44px;}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--text);transition:transform .3s,opacity .3s;}
+
+    .mobile-menu{display:none;position:fixed;inset:0;background:var(--secondary);z-index:499;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;}
+    .mobile-menu.open{display:flex;}
+    .mob-close{position:absolute;top:1.5rem;right:1.8rem;background:none;border:none;color:var(--text-light);font-size:1.3rem;cursor:pointer;}
+    .mobile-menu a{font-family:var(--font-d);font-size:2rem;font-weight:700;color:var(--text);text-decoration:none;letter-spacing:-.02em;transition:color .2s;}
+    .mobile-menu a:hover{color:var(--primary);}
+    .mob-vote{background:var(--primary)!important;padding:.6rem 2rem!important;border-radius:var(--radius);color:#f8f6f3!important;font-size:1rem!important;}
+
+    /* SHARED */
+    .container{max-width:1200px;margin:0 auto;padding:0 2.5rem;}
+    .section-tag{font-family:var(--font-ui);font-size:.62rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--primary);margin-bottom:.7rem;}
+    .section-title{font-family:var(--font-d);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;margin-bottom:.9rem;color:var(--text);}
+
+    /* ARTICLE */
+    .article-hero{background:linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);padding:5rem 0 3rem;border-bottom:1px solid var(--border);position:relative;}
+    .article-meta{font-family:var(--font-ui);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);margin-bottom:1.5rem;font-weight:600;}
+    .article-title{font-family:var(--font-d);font-size:clamp(2.2rem,4vw,3.5rem);font-weight:700;letter-spacing:-.01em;line-height:1.2;margin-bottom:2rem;color:var(--text);text-align:center;max-width:800px;margin-left:auto;margin-right:auto;}
+    .article-content{max-width:900px;margin:0 auto;padding:4rem 0;}
+    .article-text{font-size:1.1rem;line-height:1.7;color:var(--text);margin-bottom:2rem;}
+    .article-image{margin:2rem 0;text-align:center;}
+    .article-image img{max-width:100%;height:auto;border-radius:8px;box-shadow:var(--shadow-lg);}
+    .article-caption{font-size:.9rem;color:var(--text-light);margin-top:.5rem;text-align:center;}
+    .back-link{text-align:center;margin-top:4rem;}
+    .back-link a{color:var(--primary);text-decoration:none;font-family:var(--font-ui);font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;background:var(--secondary);padding:1rem 2.5rem;border-radius:25px;box-shadow:var(--shadow);transition:all .3s ease;border:1px solid var(--border);}
+    .back-link a:hover{color:var(--text-white);background:var(--primary);transform:translateY(-2px);box-shadow:0 10px 25px rgba(255,105,180,.3);}
+
+    /* FACTS LIST */
+    .facts-intro{margin-bottom:2rem;}
+    .facts-numbered{list-style:none;padding:0;counter-reset:fact-counter;}
+    .facts-numbered li{margin-bottom:2.5rem;padding:0;background:none;border-radius:0;border-left:none;position:relative;counter-increment:fact-counter;}
+    .facts-numbered li::before{display:none;}
+    .facts-numbered .article-image{margin:1.5rem 0;max-width:400px;margin-left:auto;margin-right:auto;}
+    .facts-numbered .article-image img{max-width:100%;height:auto;}
+    .fact-title{font-family:var(--font-d);font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:.5rem;padding-left:0;}
+    .fact-content{color:var(--text);line-height:1.7;padding-left:0;}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">CON<span>BRIO</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#news">News</a></li>
+        <li><a href="index.html#spotlight">Spotlight</a></li>
+        <li><a href="index.html#awards">Awards</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ARTICLE HERO -->
+  <section class="article-hero">
+    <div class="container">
+      <div class="article-meta reveal-up">Announcement · March 27, 2026</div>
+      <h1 class="article-title reveal-up">Sueli Tang to Open CONBRIO 2026 as Rohit Kshetri Bows Out</h1>
+    </div>
+  </section>
+
+  <!-- ARTICLE CONTENT -->
+  <div class="container">
+    <div class="article-content">
+      <p class="article-text reveal-up">
+        In a surprising turn of events that has sent shockwaves through the classical music community, CONBRIO organizers have announced that rising star Sueli Tang will open the 2026 edition of the prestigious International Piano Excellence Awards. This decision comes as reigning champion Rohit Kshetri has chosen to step away from the competition to focus on his burgeoning solo career and philanthropic endeavors.
+      </p>
+
+      <div class="article-image reveal-scale">
+        <img src="SueliTang.jpg" alt="Sueli Tang performing" onerror="this.style.display='none'">
+        <div class="article-caption">Sueli Tang, the new face of CONBRIO 2026</div>
+      </div>
+
+      <p class="article-text reveal-up">
+        The announcement was made during a press conference in New York City, where CONBRIO Executive Director Maria Sanchez explained the rationale behind the unprecedented move. "Rohit Kshetri has been an extraordinary champion and ambassador for CONBRIO," Sanchez stated. "His decision to bow out gracefully demonstrates the maturity and vision that made him such a compelling figure. We're honored to have him continue as an honorary advisor to the organization."
+      </p>
+
+      <p class="article-text reveal-up">
+        Sueli Tang, a 22-year-old prodigy from São Paulo, Brazil, has been making waves in the international piano scene with her innovative fusion of classical techniques and contemporary rhythms. Her selection as opening performer marks a bold new direction for CONBRIO, emphasizing diversity and fresh perspectives in classical music.
+      </p>
+
+      <p class="article-text reveal-up">
+        "I'm deeply honored to be chosen for this role," Tang said in her acceptance speech. "CONBRIO has always been about pushing boundaries and celebrating excellence. I hope to honor Rohit's legacy while bringing my own voice to the stage."
+      </p>
+
+      <p class="article-text reveal-up">
+        Kshetri himself addressed the announcement via a video message, expressing his full support for the transition. "Sueli represents the future of piano performance," he said. "Her talent and vision will take CONBRIO to new heights. I'm excited to watch from the sidelines and cheer her on."
+      </p>
+
+      <p class="article-text reveal-up">
+        The 2026 CONBRIO competition is scheduled to begin in September, with preliminary rounds taking place across major cities worldwide. Organizers promise an even more diverse field of competitors and innovative judging criteria that will further elevate the prestige of the awards.
+      </p>
+
+      <div class="back-link">
+        <a href="index.html#news">← Back to News</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Scroll effect for nav
+    window.addEventListener('scroll', function() {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 100) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

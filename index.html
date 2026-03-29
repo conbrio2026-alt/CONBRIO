@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" type="image/png" href="CONBRIO.jpg">
+  <link rel="apple-touch-icon" href="CONBRIO.jpg">
+  <title>CONBRIO — International Piano Excellence Awards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:#09090b; --black2:#0f0f11; --black3:#191919; --black4:#232323;
+      --white:#f4eff8; --white2:#e8dff0;
+      --red:#bf3030; --red2:#d93545; --red-dark:#8b1f1f; --red-glow:rgba(191,48,48,0.25);
+      --gold:#e74c3c; --gold2:#ff6b5a;
+      --muted:#b0a0b8; --border:rgba(244,239,232,0.15); --border2:rgba(244,239,232,0.25);
+      --font-d:'Playfair Display',serif; --font-b:'Cormorant Garamond',serif; --font-ui:'Montserrat',sans-serif;
+      --radius:3px;
+    }
+    html { scroll-behavior:smooth; scroll-padding-top:80px; }
+    body { background:var(--black); color:var(--white); font-family:var(--font-b); font-size:18px; line-height:1.75; overflow-x:hidden; cursor:auto; }
+    @media(min-width:1024px){ body{cursor:none;} }
+    
+    /* ANIMATION KEYFRAMES */
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes slideInLeft{from{opacity:0;transform:translateX(-40px);}to{opacity:1;transform:translateX(0);}}
+    @keyframes slideInRight{from{opacity:0;transform:translateX(40px);}to{opacity:1;transform:translateX(0);}}
+    @keyframes scaleIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+    @keyframes glowPulseAnim{0%,100%{box-shadow:0 0 20px rgba(191,48,48,.3);}50%{box-shadow:0 0 40px rgba(191,48,48,.6);}}
+    @keyframes shimmerAnim{0%{background-position:-1000px 0;}100%{background-position:1000px 0;}}
+    
+    .reveal-up{animation:fadeInUp .8s cubic-bezier(.34,.69,.46,1) forwards;opacity:0;}
+    .reveal-left{animation:slideInLeft .8s cubic-bezier(.34,.69,.46,1) forwards;opacity:0;}
+    .reveal-right{animation:slideInRight .8s cubic-bezier(.34,.69,.46,1) forwards;opacity:0;}
+    .reveal-scale{animation:scaleIn .8s cubic-bezier(.34,.69,.46,1) forwards;opacity:0;}
+    .cursor,.cursor-follower{display:none;}
+    @media(min-width:1024px){
+      .cursor{width:7px;height:7px;background:var(--red2);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;display:block;}
+      .cursor-follower{width:26px;height:26px;border:1px solid rgba(191,48,48,.55);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .1s ease,top .1s ease,width .25s,height .25s,border-color .25s;display:block;}
+      body:has(a:hover) .cursor,body:has(button:hover) .cursor{width:13px;height:13px;}
+      body:has(a:hover) .cursor-follower,body:has(button:hover) .cursor-follower{width:42px;height:42px;border-color:var(--red);}
+    }
+
+    /* VOTING OPEN BAR */
+    .voting-closed-bar{position:fixed;top:0;left:0;right:0;z-index:600;background:linear-gradient(90deg,#0f0f11 0%,rgba(30,100,30,0.18) 50%,#0f0f11 100%);border-bottom:1px solid rgba(60,180,60,0.3);display:flex;align-items:center;justify-content:center;gap:1.4rem;padding:.55rem 2rem;backdrop-filter:blur(12px);}
+    .vcb-pulse{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 0 rgba(74,222,128,0.6);animation:vcbPulse 2s ease-in-out infinite;flex-shrink:0;}
+    @keyframes vcbPulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,0.7);}50%{box-shadow:0 0 0 6px rgba(74,222,128,0);}100%{box-shadow:0 0 0 0 rgba(74,222,128,0);}}
+    .vcb-text{font-family:var(--font-ui);font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--white2);}
+    .vcb-text strong{color:#4ade80;font-weight:700;}
+    .vcb-divider{width:1px;height:14px;background:rgba(244,239,232,0.12);}
+    .vcb-reopen{font-family:var(--font-ui);font-size:.58rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.4rem;}
+    .vcb-close-btn{position:absolute;right:1.2rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);font-size:.85rem;cursor:pointer;padding:.2rem .4rem;opacity:.6;transition:opacity .2s;}
+    .vcb-close-btn:hover{opacity:1;}
+
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.6rem 0;transition:background .4s,border-bottom .4s,padding .4s;}
+    nav.scrolled{background:rgba(9,9,11,.96);border-bottom:1px solid var(--border);padding:1rem 0;backdrop-filter:blur(18px);}
+    .nav-inner{max-width:1260px;margin:0 auto;padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;}
+    .nav-logo{font-family:var(--font-d);font-size:1.4rem;font-weight:900;letter-spacing:.1em;text-decoration:none;color:var(--white);}
+    .nav-logo span{color:var(--red2);}
+    .nav-links{display:flex;gap:2rem;list-style:none;align-items:center;}
+    .nav-links a{font-family:var(--font-ui);font-size:.65rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s;padding:.5rem;}
+    .nav-links a:hover{color:var(--white);}
+    .nav-vote-btn{background:var(--red)!important;color:#f8f6f3!important;padding:.5rem 1.3rem!important;border-radius:var(--radius);min-height:40px;display:flex;align-items:center;}
+    .nav-vote-btn:hover{background:var(--red2)!important;}
+    .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;min-width:44px;min-height:44px;}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--white);transition:transform .3s,opacity .3s;}
+
+    .mobile-menu{display:none;position:fixed;inset:0;background:var(--black);z-index:499;flex-direction:column;align-items:center;justify-content:center;gap:1.8rem;}
+    .mobile-menu.open{display:flex;}
+    .mob-close{position:absolute;top:1.5rem;right:1.8rem;background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;}
+    .mobile-menu a{font-family:var(--font-d);font-size:2rem;font-weight:700;color:var(--white);text-decoration:none;letter-spacing:-.02em;transition:color .2s;}
+    .mobile-menu a:hover{color:var(--red);}
+    .mob-vote{background:var(--red)!important;padding:.6rem 2rem!important;border-radius:var(--radius);color:#f8f6f3!important;font-size:1rem!important;}
+
+    /* HERO — CHANGE 4: background image support */
+    .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .hero-bg{position:absolute;inset:0;}
+    /* ★ HERO BG IMAGE — replace "your-hero-bg.jpg" with your actual image filename */
+    .hero-bg-img{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;object-position:center;
+      opacity:.38;z-index:0;
+      transition:opacity .5s;
+      /* If no image file: this element simply won't show */
+    }
+    .piano-keys-wrap{position:absolute;bottom:0;left:0;right:0;height:200px;display:flex;align-items:flex-end;justify-content:center;opacity:.06;z-index:1;}
+    .hero-overlay{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 65% 55% at 50% 35%,rgba(191,48,48,.3) 0%,transparent 70%),linear-gradient(to bottom,rgba(9,9,11,.4) 0%,rgba(9,9,11,.7) 55%,rgba(9,9,11,.95) 100%);}
+    .hero-content{position:relative;z-index:2;text-align:center;padding:9rem 2rem 5rem;max-width:860px;}
+    .hero-eyebrow{font-family:var(--font-ui);font-size:.68rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--red2);margin-bottom:1.4rem;}
+    .hero-title{font-family:var(--font-d);font-size:clamp(5rem,16vw,13rem);font-weight:900;letter-spacing:.06em;line-height:.9;margin-bottom:1.2rem;}
+    .title-con{color:var(--white);} .title-brio{color:transparent;-webkit-text-stroke:1.5px var(--white2);}
+    .hero-subtitle{font-family:var(--font-ui);font-size:.68rem;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);margin-bottom:1.8rem;}
+    .hero-divider{display:flex;align-items:center;justify-content:center;gap:1rem;margin:1.2rem 0;color:var(--red);}
+    .hero-divider span{display:block;width:55px;height:1px;background:var(--red);opacity:.4;}
+    .hero-divider svg{width:10px;height:10px;}
+    .hero-desc{font-size:1.15rem;color:var(--white);line-height:1.85;max-width:460px;margin:0 auto 2.5rem;font-weight:300;font-style:italic;}
+    .hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3.5rem;}
+    .hero-scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;z-index:2;}
+    .hero-scroll-hint span{font-family:var(--font-ui);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
+    .scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--red),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+    @keyframes scrollPulse{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+    /* BUTTONS */
+    .btn-primary{display:inline-block;background:var(--red);color:#f8f6f3;font-family:var(--font-ui);font-size:.7rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;padding:.95rem 2.2rem;border-radius:var(--radius);border:none;cursor:pointer;transition:background .25s,box-shadow .25s,transform .2s;box-shadow:0 0 0 0 var(--red-glow);min-height:44px;display:flex;align-items:center;justify-content:center;}
+    .btn-primary:hover{background:var(--red2);transform:translateY(-2px);box-shadow:0 8px 36px var(--red-glow);}
+    .btn-primary:active{transform:translateY(0);}
+    .btn-outline{display:inline-block;background:transparent;color:var(--white);font-family:var(--font-ui);font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;padding:.95rem 2.2rem;border-radius:var(--radius);border:1px solid rgba(45,37,31,.3);cursor:pointer;transition:border-color .25s;min-height:44px;display:flex;align-items:center;justify-content:center;}
+    .btn-outline:hover{border-color:var(--white);background:rgba(139,111,71,.1);}
+    .btn-outline:active{background:rgba(191,48,48,.1);}
+
+
+    /* SHARED */
+    .container{max-width:1200px;margin:0 auto;padding:0 2.5rem;}
+    .section-tag{font-family:var(--font-ui);font-size:.62rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:.7rem;}
+    .section-title{font-family:var(--font-d);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;margin-bottom:.9rem;color:var(--white);}
+    .section-title em{font-style:italic;color:var(--red);}
+    .section-sub{font-size:1rem;color:var(--muted);line-height:1.85;max-width:520px;font-weight:300;}
+    .section-header{text-align:center;margin-bottom:4rem;}
+    .section-header .section-sub{margin:0 auto;}
+
+    /* AWARD CEREMONY NOTICE */
+    .ceremony-notice{background:linear-gradient(135deg,rgba(191,48,48,.15),rgba(201,150,58,.08));border-top:1.5px solid rgba(191,48,48,.4);border-bottom:1.5px solid rgba(191,48,48,.4);padding:3rem 2.5rem;position:relative;overflow:hidden;}
+    .ceremony-notice::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 100% 100% at 50% 0%,rgba(191,48,48,.1),transparent 70%);pointer-events:none;}
+    .ceremony-notice-inner{max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;gap:2rem;position:relative;z-index:1;}
+    .ceremony-notice-icon{font-size:2.5rem;flex-shrink:0;filter:drop-shadow(0 0 8px rgba(201,150,58,.3));}
+    .ceremony-notice-content{flex:1;}
+    .ceremony-notice-title{font-family:var(--font-d);font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:1rem;letter-spacing:-.01em;}
+    .ceremony-notice-text{font-size:.95rem;color:rgba(244,239,232,.85);line-height:1.8;font-weight:300;}
+    .ceremony-notice-text strong{color:var(--gold2);font-weight:600;}
+    @media(max-width:768px){.ceremony-notice{padding:2rem 1.5rem;}.ceremony-notice-inner{flex-direction:column;align-items:center;gap:1.5rem;}.ceremony-notice-icon{font-size:2rem;}.ceremony-notice-title{font-size:1.1rem;text-align:center;}.ceremony-notice-text{font-size:.9rem;text-align:center;}}
+    @media(max-width:600px){.ceremony-notice{padding:1.5rem 1rem;}.ceremony-notice-text{font-size:.85rem;}  }
+
+    /* NEWS TICKER */
+    .news-ticker{background:var(--black3);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.7rem 0;overflow:hidden;position:relative;}
+    .news-ticker::before,.news-ticker::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;}
+    .news-ticker::before{left:0;background:linear-gradient(to right,var(--black3),transparent);}
+    .news-ticker::after{right:0;background:linear-gradient(to left,var(--black3),transparent);}
+    .ticker-label{position:absolute;left:0;top:0;bottom:0;z-index:3;background:var(--red);display:flex;align-items:center;padding:0 1.2rem;font-family:var(--font-ui);font-size:.58rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#f8f6f3;white-space:nowrap;}
+    .ticker-track{display:flex;animation:tickerScroll 28s linear infinite;padding-left:140px;}
+    .ticker-track:hover{animation-play-state:paused;}
+    @keyframes tickerScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+    .ticker-item{font-family:var(--font-ui);font-size:.62rem;font-weight:400;letter-spacing:.08em;color:var(--white2);white-space:nowrap;padding:0 2rem;display:flex;align-items:center;gap:.8rem;}
+    .ticker-item::after{content:'·';color:var(--red);opacity:.5;}
+    .ticker-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+    .ticker-badge{display:inline-flex;align-items:center;gap:.35rem;background:rgba(201,150,58,.12);border:1px solid rgba(201,150,58,.3);border-radius:2px;padding:.1rem .45rem;font-size:.55rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);margin-right:.3rem;}
+    .ticker-badge.red{background:rgba(191,48,48,.12);border-color:rgba(191,48,48,.35);color:var(--red2);}
+    .ticker-highlight{color:var(--white);font-weight:600;}
+
+    /* NEWS SECTION */
+    .news-section{padding:7rem 0;border-top:1px solid var(--border);}
+    .news-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:1.5rem;margin-top:3rem;}
+    .news-card{background:var(--black2);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:border-color .3s,transform .3s;}
+    .news-card:hover{border-color:rgba(191,48,48,.35);transform:translateY(-3px);}
+    .news-card.featured{background:linear-gradient(135deg,rgba(191,48,48,.06),var(--black2));border-color:rgba(191,48,48,.3);}
+    .news-card-img{width:100%;height:220px;background:linear-gradient(135deg,rgba(191,48,48,.12),rgba(201,150,58,.06));display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .news-card.featured .news-card-img{height:260px;}
+    .news-card-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:none;transition:transform .5s ease;}
+    .news-card-img img.loaded{display:block;}
+    .news-card:hover .news-card-img img.loaded{transform:scale(1.04);}
+    .news-card-img-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;z-index:1;pointer-events:none;}
+    .news-card-img-placeholder .ph-emoji{font-size:3rem;opacity:.45;}
+    .news-card-img-placeholder .ph-label{font-family:var(--font-ui);font-size:.55rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);opacity:.7;}
+    .news-card-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(9,9,11,.7) 0%,transparent 55%);z-index:2;}
+    .news-card-img-tag{position:absolute;bottom:.9rem;left:1rem;z-index:3;font-family:var(--font-ui);font-size:.52rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--white);background:var(--red);padding:.2rem .6rem;border-radius:2px;}
+    .news-card-category{font-family:var(--font-ui);font-size:.55rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--red2);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;}
+    .news-card-category::before{content:'';width:20px;height:1px;background:var(--red2);display:block;}
+    .news-card-body{padding:1.8rem;}
+    .news-card-title{font-family:var(--font-d);font-size:1.15rem;font-weight:700;letter-spacing:-.01em;line-height:1.3;margin-bottom:.8rem;color:var(--white);}
+    .news-card.featured .news-card-title{font-size:1.45rem;}
+    .news-card-excerpt{font-size:.88rem;color:var(--muted);line-height:1.8;font-weight:300;margin-bottom:1.2rem;}
+    .news-card-meta{display:flex;align-items:center;justify-content:space-between;padding-top:1rem;border-top:1px solid var(--border);flex-wrap:wrap;gap:.5rem;}
+    .news-card-date{font-family:var(--font-ui);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+    .news-card-tag{font-family:var(--font-ui);font-size:.55rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold2);background:rgba(201,150,58,.1);border:1px solid rgba(201,150,58,.25);padding:.2rem .6rem;border-radius:2px;}
+    .news-sidebar{display:flex;flex-direction:column;gap:1rem;}
+    .news-mini{background:var(--black2);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:border-color .3s,transform .3s;display:flex;flex-direction:column;}
+    .news-mini:hover{border-color:rgba(191,48,48,.25);transform:translateX(3px);}
+    .news-mini-thumb{width:100%;height:180px;background:linear-gradient(135deg,rgba(191,48,48,.08),rgba(201,150,58,.05));position:relative;overflow:hidden;flex-shrink:0;}
+    .news-mini-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:none;transition:transform .4s ease;}
+    .news-mini-thumb img.loaded{display:block;}
+    .news-mini:hover .news-mini-thumb img.loaded{transform:scale(1.06);}
+    .news-mini-thumb-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.6rem;opacity:.35;}
+    .news-mini-body{padding:1rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;}
+    .news-mini-icon{font-size:1rem;flex-shrink:0;margin-top:.1rem;}
+    .news-mini-cat{font-family:var(--font-ui);font-size:.52rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:.3rem;}
+    .news-mini-title{font-family:var(--font-d);font-size:.88rem;font-weight:700;line-height:1.35;color:var(--white);margin-bottom:.3rem;}
+    .news-mini-date{font-family:var(--font-ui);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+
+    /* SPOTLIGHT */
+    .spotlight{padding:9rem 0;border-top:1px solid var(--border);position:relative;overflow:hidden;}
+    .spotlight-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 25% 50%,rgba(191,48,48,.07) 0%,transparent 70%);}
+    .spotlight-grid{display:grid;grid-template-columns:320px 1fr;gap:6rem;align-items:center;position:relative;z-index:1;}
+    .spotlight-left{text-align:center;}
+    .spotlight-badge{font-family:var(--font-ui);font-size:.62rem;font-weight:700;letter-spacing:.32em;color:var(--gold2);border:1px solid rgba(201,150,58,.35);background:rgba(201,150,58,.07);display:inline-block;padding:.45rem 1.1rem;border-radius:2px;margin-bottom:2rem;}
+    .spotlight-avatar{width:180px;height:180px;border-radius:50%;background:linear-gradient(135deg,rgba(191,48,48,.2),rgba(201,150,58,.1));border:2px solid var(--red);margin:0 auto 1.8rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:3.5rem;font-weight:900;color:var(--red);box-shadow:0 0 60px var(--red-glow),0 0 120px rgba(191,48,48,.08);animation:glowPulse 3s ease-in-out infinite;position:relative;overflow:hidden;}
+    .spotlight-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;}
+    .crown-icon{position:absolute;top:-15px;right:20px;font-size:2rem;filter:drop-shadow(0 0 4px var(--gold));animation:crownFloat 2s ease-in-out infinite;z-index:2;}
+    @keyframes crownFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
+    @keyframes glowPulse{0%,100%{box-shadow:0 0 60px var(--red-glow),0 0 120px rgba(191,48,48,.08);}50%{box-shadow:0 0 80px rgba(191,48,48,.35),0 0 160px rgba(191,48,48,.12);}}
+    .spotlight-votes-wrap{margin-top:.5rem;}
+    .spotlight-votes-num{font-family:var(--font-d);font-size:3rem;font-weight:900;letter-spacing:-.04em;color:var(--white);line-height:1;}
+    .spotlight-votes-label{font-family:var(--font-ui);font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:.3rem;}
+    .spotlight-name{font-family:var(--font-d);font-size:clamp(2.5rem,5vw,4rem);font-weight:900;letter-spacing:-.03em;line-height:1.05;margin-bottom:.4rem;}
+    .spotlight-name em{font-style:italic;color:var(--red);}
+    .spotlight-genre{font-family:var(--font-ui);font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;}
+    .spotlight-bio{font-size:1rem;color:rgba(244,239,232,.7);line-height:1.85;margin-bottom:1rem;font-weight:300;}
+    .spotlight-awards{margin:1.8rem 0;display:flex;flex-direction:column;gap:.6rem;}
+    .sp-award{font-family:var(--font-ui);font-size:.7rem;font-weight:500;letter-spacing:.06em;color:var(--muted);display:flex;align-items:center;gap:.8rem;}
+    .sp-award span{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold2);background:rgba(201,150,58,.2);border:1px solid var(--gold);padding:.15rem .5rem;border-radius:2px;}
+    .spotlight-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem;}
+
+    /* CONTESTANTS */
+    .contestants{padding:0;background:linear-gradient(135deg,rgba(191,48,48,.08),transparent);border-top:1px solid var(--border);}
+    .contestants-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2rem;}
+    .contestant-card{background:var(--black);border:1px solid var(--border);border-radius:4px;padding:2rem;position:relative;transition:border-color .3s,transform .3s,box-shadow .3s;overflow:hidden;}
+    .contestant-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--red-glow),transparent);opacity:0;transition:opacity .3s;}
+    .contestant-card:hover{border-color:rgba(191,48,48,.4);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.4);}
+    .contestant-card:hover::before{opacity:1;}
+    .contestant-card.top-card{border-color:rgba(191,48,48,.55);background:linear-gradient(135deg,rgba(191,48,48,.07),var(--black));}
+    .contestant-card.voted-card{border-color:rgba(191,48,48,.3);}
+    .rank-badge{position:absolute;top:1.1rem;right:1.1rem;font-family:var(--font-ui);font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;}
+    .rank-1{color:var(--gold2);} .rank-other{color:var(--muted);}
+    .contestant-avatar{width:64px;height:64px;border-radius:50%;background:var(--black3);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:1rem;position:relative;overflow:hidden;flex-shrink:0;}
+    .contestant-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;display:none;}
+    .contestant-avatar img.loaded{display:block;}
+    .top-card .contestant-avatar{border-color:var(--red);background:rgba(191,48,48,.15);color:var(--red);box-shadow:0 0 20px var(--red-glow);}
+    .top-card .contestant-avatar::after{content:"👑";position:absolute;font-size:1rem;bottom:-4px;right:-4px;background:var(--black);border-radius:50%;padding:1px;}
+    .contestant-genre{font-family:var(--font-ui);font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.2rem;}
+    .contestant-name{font-family:var(--font-d);font-size:1.2rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.2rem;}
+    .contestant-country{font-size:.82rem;color:var(--muted);margin-bottom:1.4rem;}
+    .vote-bar-top{display:flex;justify-content:space-between;margin-bottom:.5rem;}
+    .vote-label{font-family:var(--font-ui);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+    .vote-count{font-family:var(--font-d);font-size:1rem;font-weight:700;color:var(--white);}
+    .vote-bar-bg{height:2px;background:var(--black3);border-radius:2px;overflow:hidden;}
+    .vote-bar-fill{height:100%;background:var(--red);border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1);width:0;}
+    .top-card .vote-bar-fill{background:linear-gradient(to right,var(--red),var(--gold2));}
+    .vote-btn-wrap{display:flex;gap:.6rem;margin-top:1rem;}
+    .vote-btn{flex:1;padding:.65rem;background:transparent;border:1px solid var(--border);border-radius:var(--radius);color:var(--muted);font-family:var(--font-ui);font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:all .25s;}
+    .vote-btn:hover{background:var(--red);border-color:var(--red);color:var(--white);}
+    .vote-btn.voted{background:rgba(191,48,48,.15);border-color:var(--red);color:var(--red);cursor:default;}
+    .vote-btn.closed{opacity:.45;cursor:not-allowed;pointer-events:none;}
+    .share-btn-sm{padding:.65rem .85rem;background:transparent;border:1px solid var(--border);border-radius:var(--radius);color:var(--muted);font-family:var(--font-ui);font-size:.7rem;cursor:pointer;transition:all .25s;}
+    .share-btn-sm:hover{border-color:var(--white);color:var(--white);}
+
+    /* VOTE FORM MODAL */
+    .vote-form-modal{display:none;position:fixed;inset:0;background:rgba(5,5,7,.95);backdrop-filter:blur(24px);z-index:2100;align-items:center;justify-content:center;padding:1rem;}
+    .vote-form-modal.open{display:flex;animation:modalIn .35s cubic-bezier(.34,1.2,.64,1);}
+    @keyframes modalIn{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
+
+    .vfm-box{background:var(--black2);border:1px solid rgba(244,239,232,0.1);border-radius:10px;width:100%;max-width:540px;position:relative;overflow:hidden;max-height:92vh;overflow-y:auto;box-shadow:0 40px 120px rgba(0,0,0,.8), 0 0 0 1px rgba(191,48,48,.12);}
+    .vfm-box::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom, var(--red), var(--gold), var(--red));background-size:100% 200%;animation:accentFlow 3s linear infinite;}
+    @keyframes accentFlow{0%{background-position:0% 0%;}100%{background-position:0% 200%;}}
+
+    .vfm-progress{display:flex;align-items:center;padding:1.6rem 2rem 0 2.4rem;gap:.5rem;}
+    .vfm-step-dot{display:flex;align-items:center;gap:.5rem;}
+    .vfm-step-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-ui);font-size:.6rem;font-weight:700;border:1.5px solid rgba(244,239,232,.15);color:var(--muted);transition:all .4s;}
+    .vfm-step-num.active{background:var(--red);border-color:var(--red);color:var(--white);box-shadow:0 0 14px var(--red-glow);}
+    .vfm-step-num.done{background:rgba(74,222,128,.15);border-color:#4ade80;color:#4ade80;}
+    .vfm-step-label{font-family:var(--font-ui);font-size:.52rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);transition:color .4s;}
+    .vfm-step-dot.active .vfm-step-label{color:var(--white2);}
+    .vfm-step-line{flex:1;height:1px;background:rgba(244,239,232,.08);}
+    .vfm-step-line.done{background:rgba(74,222,128,.3);}
+
+    .vfm-header{padding:1.4rem 2rem 1.4rem 2.4rem;border-bottom:1px solid var(--border);}
+    .vfm-header-tag{font-family:var(--font-ui);font-size:.52rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--red);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;}
+    .vfm-header-tag::before{content:'';width:16px;height:1px;background:var(--red);}
+    .vfm-header h3{font-family:var(--font-d);font-size:1.65rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.25rem;line-height:1.2;}
+    .vfm-header p{font-size:.82rem;color:var(--muted);font-weight:300;font-style:italic;}
+    .vfm-deadline-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(232,184,75,.07);border:1px solid rgba(232,184,75,.25);border-radius:2px;padding:.3rem .75rem;margin-top:.7rem;}
+    .vfm-deadline-badge span:first-child{font-size:.75rem;}
+    .vfm-deadline-badge span:last-child{font-family:var(--font-ui);font-size:.56rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold2);}
+    .vfm-close{position:absolute;top:1.3rem;right:1.4rem;background:rgba(244,239,232,.04);border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:50%;font-size:.85rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+    .vfm-close:hover{background:rgba(191,48,48,.15);border-color:rgba(191,48,48,.4);color:var(--white);}
+    .vfm-body{padding:1.8rem 2rem 1.8rem 2.4rem;}
+
+    .vfm-candidate-card{display:flex;align-items:center;gap:1.2rem;padding:1.1rem 1.4rem;background:linear-gradient(135deg,rgba(191,48,48,.06),rgba(201,150,58,.03));border:1px solid rgba(191,48,48,.2);border-radius:6px;margin-bottom:1.8rem;position:relative;overflow:hidden;}
+    .vfm-candidate-card::after{content:'';position:absolute;top:0;right:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--red),var(--gold));}
+    .vfm-av{width:48px;height:48px;border-radius:50%;background:var(--black3);border:2px solid rgba(191,48,48,.5);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.85rem;font-weight:700;color:var(--red);flex-shrink:0;overflow:hidden;position:relative;box-shadow:0 0 16px var(--red-glow);}
+    .vfm-av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;}
+    .vfm-candidate-info{flex:1;min-width:0;}
+    .vfm-voting-label{font-family:var(--font-ui);font-size:.5rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.2rem;}
+    .vfm-voting-name{font-family:var(--font-d);font-size:1.1rem;font-weight:700;color:var(--white);line-height:1.2;}
+    .vfm-voting-sub{font-family:var(--font-ui);font-size:.58rem;color:var(--muted);margin-top:.15rem;}
+    .vfm-vote-check{font-size:1.1rem;flex-shrink:0;}
+
+    .vfm-step{display:none;}
+    .vfm-step.active{display:block;animation:stepIn .3s ease;}
+    @keyframes stepIn{from{opacity:0;transform:translateX(12px);}to{opacity:1;transform:none;}}
+
+    .vfm-field{margin-bottom:1.1rem;}
+    .vfm-label{font-family:var(--font-ui);font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--white2);display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;}
+    .vfm-label-req{color:var(--red);font-size:.65rem;}
+    .vfm-input-wrap{position:relative;}
+    .vfm-input{width:100%;background:rgba(9,9,11,.6);border:1.5px solid rgba(244,239,232,.1);border-radius:6px;padding:.9rem 1rem .9rem 2.8rem;font-family:var(--font-ui);font-size:.78rem;color:var(--white);letter-spacing:.03em;outline:none;transition:border-color .2s,box-shadow .2s,background .2s;min-height:44px;}
+    .vfm-input::placeholder{color:rgba(122,116,110,.5);}
+    .vfm-input:focus{border-color:rgba(191,48,48,.5);background:rgba(15,15,17,.8);box-shadow:0 0 0 3px rgba(191,48,48,.08);}
+    .vfm-input.error{border-color:var(--red2);box-shadow:0 0 0 3px rgba(191,48,48,.1);}
+    .vfm-input.valid{border-color:rgba(74,222,128,.4);}
+    .vfm-input-icon{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);font-size:.85rem;pointer-events:none;opacity:.6;}
+    .vfm-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+    .vfm-error-msg{font-family:var(--font-ui);font-size:.55rem;color:var(--red2);margin-top:.35rem;display:none;letter-spacing:.06em;}
+    .vfm-error-msg.show{display:block;}
+
+    /* AWARD NOMINEE SELECTOR in modal */
+    .vfm-nominee-select{margin-bottom:1.4rem;}
+    .vfm-nominee-select-label{font-family:var(--font-ui);font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--white2);margin-bottom:.7rem;display:block;}
+    .vfm-nominee-options{display:flex;flex-direction:column;gap:.5rem;}
+    .vfm-nominee-option{display:flex;align-items:center;gap:.9rem;padding:.75rem 1rem;background:rgba(9,9,11,.4);border:1.5px solid rgba(244,239,232,.08);border-radius:5px;cursor:pointer;transition:all .2s;}
+    .vfm-nominee-option:hover{border-color:rgba(191,48,48,.35);background:rgba(191,48,48,.05);}
+    .vfm-nominee-option.selected{border-color:var(--red);background:rgba(191,48,48,.1);}
+    .vfm-nominee-option input[type="radio"]{display:none;}
+    .vfm-nom-radio{width:16px;height:16px;border-radius:50%;border:1.5px solid rgba(244,239,232,.2);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+    .vfm-nominee-option.selected .vfm-nom-radio{border-color:var(--red);background:var(--red);}
+    .vfm-nominee-option.selected .vfm-nom-radio::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--white);}
+    .vfm-nom-av{width:32px;height:32px;border-radius:50%;background:var(--black3);border:1.5px solid rgba(244,239,232,.1);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.6rem;font-weight:700;color:var(--muted);flex-shrink:0;overflow:hidden;position:relative;}
+    .vfm-nom-av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;}
+    .vfm-nominee-option.selected .vfm-nom-av{border-color:rgba(191,48,48,.5);}
+    .vfm-nom-name{font-family:var(--font-d);font-size:.9rem;font-weight:700;color:var(--white2);flex:1;}
+    .vfm-nom-detail{font-family:var(--font-ui);font-size:.55rem;color:var(--muted);margin-top:.1rem;}
+    .vfm-nom-votes{font-family:var(--font-d);font-size:.8rem;font-weight:700;color:var(--gold);font-size:.75rem;}
+
+    .vfm-integrity-notice{background:rgba(201,150,58,.03);border:1px solid rgba(201,150,58,.15);border-radius:5px;padding:1rem 1.2rem;margin-bottom:1.4rem;display:flex;gap:.9rem;align-items:flex-start;}
+    .vfm-integrity-icon{font-size:1rem;flex-shrink:0;margin-top:.05rem;opacity:.8;}
+    .vfm-integrity-text{font-family:var(--font-ui);font-size:.58rem;color:rgba(201,150,58,.65);line-height:1.7;letter-spacing:.03em;}
+    .vfm-integrity-text strong{color:rgba(201,150,58,.9);display:block;margin-bottom:.2rem;letter-spacing:.14em;text-transform:uppercase;font-size:.52rem;}
+
+    .vfm-review-card{background:rgba(9,9,11,.5);border:1px solid rgba(244,239,232,.06);border-radius:5px;padding:1.2rem 1.4rem;margin-bottom:1.4rem;}
+    .vfm-review-title{font-family:var(--font-ui);font-size:.52rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;padding-bottom:.6rem;border-bottom:1px solid var(--border);}
+    .vfm-review-row{display:flex;align-items:center;justify-content:space-between;padding:.4rem 0;border-bottom:1px solid rgba(244,239,232,.03);}
+    .vfm-review-row:last-child{border-bottom:none;}
+    .vfm-review-key{font-family:var(--font-ui);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+    .vfm-review-val{font-family:var(--font-d);font-size:.9rem;font-weight:600;color:var(--white2);}
+
+    .vfm-btn-row{display:flex;gap:.7rem;margin-top:.8rem;}
+    .vfm-back{flex:0 0 auto;background:transparent;color:var(--muted);border:1.5px solid rgba(244,239,232,.1);border-radius:6px;padding:.9rem 1.4rem;font-family:var(--font-ui);font-size:.62rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .2s;min-height:44px;display:flex;align-items:center;justify-content:center;}
+    .vfm-back:hover{border-color:var(--muted);color:var(--white2);}
+    .vfm-submit{flex:1;background:linear-gradient(135deg,var(--red),#c23030);color:var(--white);border:none;border-radius:6px;padding:1rem;font-family:var(--font-ui);font-size:.67rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:all .3s;position:relative;overflow:hidden;min-height:48px;display:flex;align-items:center;justify-content:center;}
+    .vfm-submit::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.07));opacity:0;transition:opacity .2s;}
+    .vfm-submit:hover{background:linear-gradient(135deg,var(--red2),var(--red));transform:translateY(-2px);box-shadow:0 8px 28px rgba(191,48,48,.4);}
+    .vfm-submit:active{transform:translateY(0);}
+    .vfm-submit:hover::after{opacity:1;}
+    .vfm-next{flex:1;background:var(--black3);color:var(--white2);border:1.5px solid rgba(244,239,232,.12);border-radius:6px;padding:1rem;font-family:var(--font-ui);font-size:.67rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .2s;min-height:48px;display:flex;align-items:center;justify-content:center;}
+    .vfm-next:hover{background:rgba(191,48,48,.1);border-color:rgba(191,48,48,.4);color:var(--white);}
+
+    .vfm-footer-note{padding:.6rem 2rem 1.5rem 2.4rem;text-align:center;}
+    .vfm-footer-note p{font-family:var(--font-ui);font-size:.52rem;color:rgba(122,116,110,.6);letter-spacing:.05em;line-height:1.7;}
+    .vfm-footer-note a{color:rgba(201,150,58,.6);text-decoration:none;border-bottom:1px solid rgba(201,150,58,.2);transition:color .2s;}
+    .vfm-footer-note a:hover{color:var(--gold);}
+
+    /* TOAST */
+    .vote-toast{position:fixed;bottom:2.5rem;left:50%;transform:translateX(-50%) translateY(100px);background:rgba(9,9,11,.95);border:1px solid var(--red);border-left:3px solid var(--red);color:var(--white);font-family:var(--font-ui);font-size:.72rem;letter-spacing:.1em;padding:.85rem 2rem;border-radius:var(--radius);z-index:3000;transition:transform .4s cubic-bezier(.34,1.56,.64,1);white-space:nowrap;backdrop-filter:blur(10px);}
+    .vote-toast.show{transform:translateX(-50%) translateY(0);}
+    @media(max-width:600px){.vote-toast{white-space:normal;max-width:85vw;text-align:center;font-size:.65rem;}}
+
+    /* JUDGES */
+    .judges{padding:9rem 0;border-top:1px solid var(--border);}
+    .judges-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;}
+    .judge-card{background:var(--black2);border:1px solid var(--border);border-radius:4px;padding:2rem 1.8rem;transition:border-color .3s,transform .3s;}
+    .judge-card:hover{border-color:rgba(191,48,48,.3);transform:translateY(-3px);}
+    .judge-avatar{width:60px;height:60px;border-radius:50%;background:var(--black3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:1.1rem;font-weight:700;color:var(--muted);margin-bottom:1.2rem;}
+    .judge-name{font-family:var(--font-d);font-size:1.1rem;font-weight:700;margin-bottom:.2rem;}
+    .judge-title{font-family:var(--font-ui);font-size:.62rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:.4rem;}
+    .judge-org{font-size:.82rem;color:var(--muted);}
+
+    /* AWARDS */
+    .awards{padding:9rem 0;position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(191,48,48,.03) 0%,transparent 50%,rgba(201,150,58,.02) 100%);border-top:1px solid var(--border);}
+    .awards-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--font-d);font-size:clamp(8rem,20vw,22rem);font-weight:900;letter-spacing:.1em;color:transparent;-webkit-text-stroke:1px rgba(244,239,232,.02);pointer-events:none;white-space:nowrap;user-select:none;}
+    .awards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2.5rem;position:relative;z-index:1;}
+    .award-card{background:linear-gradient(135deg,rgba(15,15,17,.8),rgba(25,25,25,.9));border:1.2px solid rgba(191,48,48,.2);border-radius:14px;overflow:hidden;transition:all .4s cubic-bezier(.34,.69,.46,1);box-shadow:0 8px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08);position:relative;backdrop-filter:blur(10px);}
+    .award-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(191,48,48,.5),transparent);opacity:0;transition:opacity .4s;}
+    .award-card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 100% 100% at 50% 0%,rgba(191,48,48,.1),transparent 70%);opacity:0;transition:opacity .4s;pointer-events:none;}
+    .award-card:hover{border-color:rgba(191,48,48,.45);transform:translateY(-8px);box-shadow:0 24px 48px rgba(191,48,48,.15),inset 0 1px 0 rgba(255,255,255,.1);}
+    .award-card:hover::before{opacity:1;}
+    .award-card:hover::after{opacity:1;}
+    .award-card:nth-child(odd){animation-delay:.05s;}
+    .award-card:nth-child(even){animation-delay:.1s;}
+    .award-card:nth-child(3){animation-delay:.15s;}
+    .award-card:nth-child(4){animation-delay:.2s;}
+    .award-card:nth-child(5){animation-delay:.25s;}
+    .award-card:nth-child(6){animation-delay:.3s;}
+    .award-header{padding:2rem 2rem 1.4rem;border-bottom:1px solid rgba(244,239,232,.06);display:flex;align-items:flex-start;gap:1.2rem;}
+    .award-icon{font-size:2rem;line-height:1;margin-top:0;filter:drop-shadow(0 0 8px rgba(201,150,58,.3));}
+    .award-title{font-family:var(--font-d);font-size:1.25rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.4rem;background:linear-gradient(135deg,var(--white),rgba(255,255,255,.7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .award-desc{font-size:.85rem;color:rgba(176,160,184,.9);font-style:italic;font-weight:300;line-height:1.5;}
+    .nominee-avatar{width:36px;height:36px;border-radius:50%;background:var(--black3);border:1.5px solid rgba(191,48,48,.2);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.7rem;font-weight:700;color:var(--white);flex-shrink:0;position:relative;overflow:hidden;transition:all .3s;}
+    .nominee-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;display:none;}
+    .nominee-avatar img.loaded{display:block;}
+    .nominee-avatar.lead-av{border-color:rgba(201,150,58,.6);background:rgba(201,150,58,.15);color:var(--gold2);box-shadow:0 0 12px rgba(201,150,58,.3);}
+    .award-nominees{padding:1.4rem 2rem;}
+    .nominee-row{display:flex;align-items:center;justify-content:space-between;padding:.8rem 0;border-bottom:1px solid rgba(244,239,232,.03);gap:.8rem;transition:background .2s;}
+    .nominee-row:hover{background:rgba(191,48,48,.05);border-radius:4px;padding:.8rem .6rem;}
+    .nominee-row:last-child{border-bottom:none;}
+    .nominee-info{flex:1;min-width:0;}
+    .nominee-name{font-family:var(--font-d);font-size:.95rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--white2);}
+    .nominee-name.leading{color:var(--gold2);font-weight:800;text-shadow:0 0 8px rgba(201,150,58,.5);}
+    .nominee-detail{font-size:.75rem;color:rgba(176,160,184,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:.2rem;}
+    .nominee-votes{font-family:var(--font-d);font-size:.95rem;font-weight:700;white-space:nowrap;text-align:right;flex-shrink:0;color:var(--white);}
+    .nominee-votes.leading{color:var(--gold2);font-weight:900;text-shadow:0 0 8px rgba(201,150,58,.4);}
+    .nominee-bar{width:100%;height:3px;background:rgba(191,48,48,.1);border-radius:3px;overflow:hidden;margin-top:.5rem;}
+    .nominee-bar-fill{height:100%;background:linear-gradient(90deg,rgba(191,48,48,.4),rgba(191,48,48,.7));border-radius:3px;transition:width 1.4s cubic-bezier(.4,0,.2,1);width:0;box-shadow:0 0 8px rgba(191,48,48,.3);}
+    .nominee-bar-fill.leading{background:linear-gradient(90deg,var(--gold),var(--gold2));box-shadow:0 0 12px rgba(201,150,58,.5);}
+    .award-vote-btn{display:block;width:calc(100% - 4rem);margin:1rem 2rem 0;padding:.7rem;background:linear-gradient(135deg,rgba(191,48,48,.1),rgba(191,48,48,.05));border:1.2px solid rgba(191,48,48,.3);border-radius:8px;color:rgba(244,239,232,.8);font-family:var(--font-ui);font-size:.62rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;transition:all .3s;text-align:center;}
+    .award-vote-btn:hover{background:linear-gradient(135deg,rgba(191,48,48,.3),rgba(191,48,48,.15));border-color:var(--red);color:var(--white);transform:translateY(-2px);box-shadow:0 8px 20px rgba(191,48,48,.2);}
+    .award-vote-btn.voted{background:rgba(191,48,48,.15);border-color:rgba(191,48,48,.5);color:var(--red2);cursor:default;pointer-events:none;font-weight:700;}
+    .award-vote-btn.closed{opacity:.45;cursor:not-allowed;pointer-events:none;}
+
+    /* RUNNER UP & THIRD PLACE SECTIONS */
+    .spotlight.runner-up{background:linear-gradient(180deg,rgba(192,192,192,.02),transparent);border-top:1px solid rgba(192,192,192,.2);}
+    .spotlight.third-place{background:linear-gradient(180deg,rgba(205,127,50,.02),transparent);border-top:1px solid rgba(205,127,50,.2);}
+
+    /* GALLERY */
+    .gallery{padding:9rem 0;border-top:1px solid var(--border);}
+    .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;}
+    .gallery-item{border-radius:3px;overflow:hidden;position:relative;background:var(--black2);border:1px solid var(--border);transition:transform .3s,border-color .3s;cursor:pointer;}
+    .gallery-item:hover{transform:scale(1.02);border-color:rgba(191,48,48,.35);}
+    .gallery-item.wide{grid-column:span 2;}
+    .gallery-inner{width:100%;padding-bottom:75%;position:relative;overflow:hidden;}
+    .gallery-item.wide .gallery-inner{padding-bottom:50%;}
+    .gallery-inner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:none;transition:transform .5s ease;}
+    .gallery-inner img.loaded{display:block;}
+    .gallery-item:hover .gallery-inner img.loaded{transform:scale(1.06);}
+    .gallery-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;background-size:cover;background-position:center;}
+    .gallery-ph-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(191,48,48,.07) 0%,rgba(201,150,58,.04) 100%);}
+    .gallery-ph-bg::after{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(244,239,232,.02) 28px,rgba(244,239,232,.02) 29px),repeating-linear-gradient(90deg,transparent,transparent 28px,rgba(244,239,232,.02) 28px,rgba(244,239,232,.02) 29px);}
+    .gallery-emoji{font-size:2.5rem;opacity:.45;position:relative;z-index:1;}
+    .gallery-label{font-family:var(--font-ui);font-size:.62rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:center;padding:0 1rem;position:relative;z-index:1;}
+    .gallery-img-hint{font-family:var(--font-ui);font-size:.5rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(122,116,110,.45);position:relative;z-index:1;display:flex;align-items:center;gap:.35rem;}
+    .gallery-img-hint::before{content:'';display:block;width:12px;height:1px;background:rgba(122,116,110,.3);}
+    .gallery-img-hint::after{content:'';display:block;width:12px;height:1px;background:rgba(122,116,110,.3);}
+    .gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(9,9,11,.85),transparent 55%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:1rem;z-index:3;}
+    .gallery-item:hover .gallery-overlay{opacity:1;}
+    .gallery-caption{font-family:var(--font-d);font-size:.9rem;font-style:italic;color:var(--white);}
+    .gallery-num{position:absolute;top:.6rem;left:.6rem;z-index:2;font-family:var(--font-ui);font-size:.5rem;font-weight:700;letter-spacing:.16em;color:rgba(244,239,232,.3);background:rgba(9,9,11,.4);border:1px solid rgba(244,239,232,.08);padding:.15rem .45rem;border-radius:2px;backdrop-filter:blur(4px);}
+
+    /* VOTE CTA */
+    .vote-cta{padding:9rem 2.5rem;text-align:center;background:linear-gradient(135deg,rgba(191,48,48,.1),transparent);border-top:1px solid var(--border);position:relative;overflow:hidden;}
+    .vote-cta::before{content:'';position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(191,48,48,.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);}
+    .vote-cta-inner{position:relative;z-index:1;}
+    .total-votes-showcase{max-width:700px;margin:0 auto;}
+    .vote-counter-display{display:flex;flex-direction:column;align-items:center;padding:3rem 2rem;background:rgba(191,48,48,.15);border:1px solid rgba(191,48,48,.3);border-radius:12px;margin-bottom:2rem;animation:fadeInUp .8s ease-out;}
+    .vc-num{font-family:var(--font-d);font-size:clamp(3rem,10vw,5rem);font-weight:900;letter-spacing:-.04em;color:var(--gold);line-height:1;}
+    .vc-label{font-family:var(--font-ui);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.4rem;}
+    
+    /* VOTE DISTRIBUTION BARS */
+    .vote-distribution{margin-top:3rem;padding:2rem;background:rgba(191,48,48,.08);border:1px solid rgba(191,48,48,.15);border-radius:12px;text-align:left;}
+    .vote-dist-title{font-family:var(--font-ui);font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem;text-align:center;}
+    .vote-dist-row{margin-bottom:2rem;animation:fadeInUp .8s ease-out;}
+    .vote-dist-row:nth-child(2){animation-delay:.1s;}
+    .vote-dist-row:nth-child(3){animation-delay:.2s;}
+    .vote-dist-header{display:flex;justify-content:space-between;margin-bottom:.6rem;}
+    .vote-dist-name{font-family:var(--font-d);font-size:.95rem;font-weight:700;color:var(--white);}
+    .vote-dist-percent{font-family:var(--font-ui);font-size:.65rem;font-weight:600;color:var(--gold);}
+    .vote-dist-bar-bg{height:8px;background:rgba(191,48,48,.15);border-radius:4px;overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.3);}
+    .vote-dist-bar-fill{height:100%;background:linear-gradient(to right,var(--red),var(--gold));border-radius:4px;transition:width 2s cubic-bezier(.34,.69,.46,1);box-shadow:0 0 16px rgba(191,48,48,.4);animation:shimmerAnim 3s infinite;}
+    .vote-dist-bar-fill{background-size:1000px 100%;}
+    .voting-open-notice{display:inline-flex;align-items:center;gap:1rem;border:1px solid rgba(74,222,128,.25);background:rgba(74,222,128,.04);border-radius:var(--radius);padding:1.1rem 2rem;margin-bottom:2rem;}
+    .von-icon{font-size:1.2rem;}
+    .von-text{text-align:left;}
+    .von-title{font-family:var(--font-ui);font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:#4ade80;margin-bottom:.15rem;}
+    .von-sub{font-family:var(--font-ui);font-size:.58rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+    .von-sub strong{color:var(--gold);}
+
+    /* FOOTER */
+    .footer{border-top:1px solid var(--border);padding:4.5rem 0 0;}
+    .footer-inner{max-width:1200px;margin:0 auto;padding:0 2.5rem 3.5rem;display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:3rem;}
+    .footer-brand p{font-size:.82rem;color:var(--muted);margin-top:.5rem;font-style:italic;line-height:1.6;}
+    .footer-col-title{font-family:var(--font-ui);font-size:.6rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--white2);margin-bottom:1.4rem;padding-bottom:.7rem;border-bottom:1px solid var(--border);}
+    .footer-col-links{display:flex;flex-direction:column;gap:.65rem;}
+    .footer-col-links a{font-family:var(--font-ui);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+    .footer-col-links a:hover{color:var(--white);}
+    .footer-newsletter p{font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;}
+    .newsletter-form{display:flex;gap:.5rem;flex-direction:column;}
+    .newsletter-input{background:var(--black3);border:1px solid var(--border);border-radius:var(--radius);padding:.8rem 1rem;font-family:var(--font-ui);font-size:.7rem;color:var(--white);letter-spacing:.06em;outline:none;transition:border-color .2s;width:100%;min-height:44px;}
+    .newsletter-input::placeholder{color:var(--muted);}
+    .newsletter-input:focus{border-color:rgba(191,48,48,.5);}
+    .newsletter-btn{background:var(--red);border:none;border-radius:var(--radius);padding:.8rem 1.4rem;font-family:var(--font-ui);font-size:.65rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--white);cursor:pointer;transition:background .2s;min-height:44px;}
+    .newsletter-btn:hover{background:var(--red2);}
+    .newsletter-btn:active{transform:scale(.98);}
+
+    .footer-awards-badge{display:inline-flex;align-items:center;gap:.6rem;border:1px solid rgba(201,150,58,.2);border-radius:2px;padding:.5rem .9rem;margin-top:.8rem;background:rgba(201,150,58,.04);}
+    .footer-awards-badge span:first-child{font-size:.9rem;}
+    .footer-awards-badge span:last-child{font-family:var(--font-ui);font-size:.55rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);}
+    .footer-bottom{border-top:1px solid var(--border);padding:1.6rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .footer-bottom p{font-size:.72rem;color:var(--muted);font-style:italic;}
+    .footer-bottom-links{display:flex;gap:1.5rem;flex-wrap:wrap;}
+    .footer-bottom-links a{font-family:var(--font-ui);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+    .footer-bottom-links a:hover{color:var(--white);}
+
+    /* COOKIE */
+    .cookie-bar{position:fixed;bottom:0;left:0;right:0;z-index:1800;background:rgba(9,9,11,.97);border-top:1px solid var(--border2);backdrop-filter:blur(20px);transform:translateY(100%);transition:transform .5s cubic-bezier(.34,1.56,.64,1);}
+    .cookie-bar.show{transform:translateY(0);}
+    .cookie-bar-inner{max-width:1200px;margin:0 auto;padding:1.4rem 2.5rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
+    .cookie-icon{font-size:1.4rem;flex-shrink:0;}
+    .cookie-text{flex:1;min-width:220px;}
+    .cookie-text strong{font-family:var(--font-ui);font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--white2);display:block;margin-bottom:.25rem;}
+    .cookie-text p{font-family:var(--font-ui);font-size:.65rem;color:var(--muted);line-height:1.6;letter-spacing:.04em;}
+    .cookie-text p a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,150,58,.3);}
+    .cookie-actions{display:flex;gap:.7rem;flex-shrink:0;flex-wrap:wrap;align-items:center;}
+    .cookie-btn-accept{background:var(--red);color:var(--white);border:none;border-radius:var(--radius);font-family:var(--font-ui);font-size:.62rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:.65rem 1.4rem;cursor:pointer;transition:background .2s;white-space:nowrap;}
+    .cookie-btn-accept:hover{background:var(--red2);}
+    .cookie-btn-decline{background:transparent;color:var(--muted);border:1px solid var(--border2);border-radius:var(--radius);font-family:var(--font-ui);font-size:.62rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:.65rem 1.1rem;cursor:pointer;transition:all .2s;white-space:nowrap;}
+    .cookie-btn-decline:hover{border-color:var(--muted);color:var(--white2);}
+    .cookie-divider{width:1px;height:20px;background:var(--border);}
+    .cookie-manage{font-family:var(--font-ui);font-size:.58rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(122,116,110,.4);transition:color .2s;white-space:nowrap;}
+    .cookie-manage:hover{color:var(--white2);}
+
+    /* SHARE MODAL */
+    .share-modal{display:none;position:fixed;inset:0;background:rgba(9,9,11,.85);backdrop-filter:blur(10px);z-index:2000;align-items:center;justify-content:center;}
+    .share-modal.open{display:flex;}
+    .share-modal-box{background:var(--black2);border:1px solid var(--border2);border-radius:6px;padding:3rem 2.5rem;max-width:420px;width:90%;text-align:center;position:relative;}
+    .share-close{position:absolute;top:1.2rem;right:1.4rem;background:none;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;}
+    .share-icon{font-size:2.5rem;margin-bottom:1rem;}
+    .share-title{font-family:var(--font-d);font-size:1.5rem;font-weight:700;margin-bottom:.6rem;}
+    .share-text{font-size:.95rem;color:var(--muted);margin-bottom:2rem;line-height:1.6;}
+    .share-btns{display:flex;flex-direction:column;gap:.7rem;}
+    .share-platform{padding:.85rem;border-radius:var(--radius);font-family:var(--font-ui);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;border:none;cursor:pointer;transition:opacity .2s;}
+    .share-platform:hover{opacity:.85;}
+    .twitter{background:#000;color:#fff;} .whatsapp{background:#25d366;color:#fff;} .copy{background:var(--black3);color:var(--white);border:1px solid var(--border2);}
+
+    /* ANIMATIONS */
+    .reveal-up{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;}
+    .reveal-left{opacity:0;transform:translateX(-28px);transition:opacity .8s ease,transform .8s ease;}
+    .reveal-right{opacity:0;transform:translateX(28px);transition:opacity .8s ease,transform .8s ease;}
+    .revealed{opacity:1!important;transform:none!important;}
+    .delay-1{transition-delay:.1s!important;} .delay-2{transition-delay:.2s!important;} .delay-3{transition-delay:.3s!important;} .delay-4{transition-delay:.4s!important;} .delay-5{transition-delay:.5s!important;}
+    @keyframes pulseGlow{0%{text-shadow:0 0 0 var(--gold);}100%{text-shadow:0 0 8px var(--gold);}}
+    .vote-count-updated{animation:pulseGlow 0.4s ease-out;}
+    ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:var(--black3);} ::-webkit-scrollbar-thumb{background:var(--red);border-radius:3px;} ::-webkit-scrollbar-thumb:hover{background:var(--red2);}
+
+    /* CELEBRATION CONFETTI */
+    @keyframes confettiFall{
+      0%{transform:translateY(0) rotateZ(0deg);opacity:1;}
+      100%{transform:translateY(100vh) rotateZ(720deg);opacity:0;}
+    }
+    .confetti{position:fixed;width:10px;height:10px;pointer-events:none;z-index:9999;}
+    .confetti-piece{animation:confettiFall linear forwards;}
+
+    /* TESTIMONIALS */
+    .testimonials{padding:7rem 0;border-top:1px solid var(--border);background:linear-gradient(135deg,rgba(160,132,92,.04),rgba(139,111,71,.03));}
+    .testimonials-header{text-align:center;margin-bottom:4rem;}
+    .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;}
+    .testimonial-card{background:var(--black2);border:1px solid rgba(139,111,71,.15);border-radius:8px;padding:2.2rem;position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(45,37,31,.06);}
+    .testimonial-card:hover{border-color:var(--red);box-shadow:0 4px 16px rgba(139,111,71,.12);}
+    .testimonial-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--red),var(--gold));opacity:.7;}
+    .testimonial-quote{font-size:1rem;color:var(--white2);line-height:1.8;margin-bottom:1.8rem;font-style:italic;font-weight:300;}
+    .testimonial-author{display:flex;align-items:center;gap:1rem;margin-top:1.8rem;padding-top:1.8rem;border-top:1px solid var(--border);}
+    .testimonial-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--red),var(--gold));display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:1.5rem;font-weight:700;flex-shrink:0;color:var(--white);}
+    .testimonial-info h4{font-family:var(--font-d);font-size:1rem;font-weight:700;color:var(--white);margin-bottom:.2rem;}
+    .testimonial-info p{font-family:var(--font-ui);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+
+    ::-webkit-scrollbar{width:6px;} ::-webkit-scrollbar-track{background:var(--black3);} ::-webkit-scrollbar-thumb{background:var(--red);border-radius:3px;} ::-webkit-scrollbar-thumb:hover{background:var(--red2);}
+
+    /* RESPONSIVE */
+    @media(max-width:1100px){.footer-inner{grid-template-columns:1fr 1fr;}.news-grid{grid-template-columns:1fr;}.contestants-grid{grid-template-columns:1fr;}.awards-grid{grid-template-columns:1fr;}.sticky-nav-wrapper{display:none;}}
+    @media(max-width:1000px){.nav-links{display:none;}.hamburger{display:flex;}.nav-inner,.container{padding:0 1.5rem;}.spotlight-grid{grid-template-columns:1fr;gap:3rem;}.gallery-grid{grid-template-columns:repeat(2,1fr);}.gallery-item.wide{grid-column:span 1;}.spotlight-left{order:-1;}.contestants-grid{grid-template-columns:1fr;}.awards-grid{grid-template-columns:1fr;}.sticky-nav-wrapper{display:none;}.awards{padding:6rem 0;}.hero{min-height:auto;padding:6rem 0;}.hero-content{padding:4rem 2rem 2rem;}.hero-title{font-size:clamp(3rem,10vw,5rem);}.section-title{font-size:clamp(1.8rem,5vw,3rem);}.body{font-size:16px;}}
+    @media(max-width:768px){.nav-inner{padding:1rem 0;}.nav-logo{font-size:1.2rem;}.hero{min-height:70vh;padding:4rem 0;}.hero-title{font-size:clamp(2.5rem,9vw,4.5rem);}.hero-content{padding:3rem 1.5rem 1rem;}.hero-desc{font-size:1rem;}.btn-primary,.btn-outline{padding:.8rem 1.8rem;font-size:.65rem;}.news-section{padding:4rem 0;}.spotlight{padding:5rem 0;}.gallery{padding:5rem 0;}.vote-cta{padding:5rem 2rem;}.footer{padding:3rem 0 0;}.container{padding:0 1.2rem;}.section-header{margin-bottom:2.5rem;}}
+    @media(max-width:700px){.footer-inner{grid-template-columns:1fr;gap:2rem;}.footer-bottom{flex-direction:column;align-items:flex-start;}.vfm-row{grid-template-columns:1fr;}.contestants-grid{grid-template-columns:1fr;}.awards-grid{grid-template-columns:1fr;}.award-card{padding:1.6rem;border-radius:8px;}.vote-distribution{padding:1.5rem;border-radius:8px;}.sticky-nav-wrapper{display:none;}.news-grid{grid-template-columns:1fr;}.footer-inner{padding:0 1.5rem 2rem;}.awards-bg-text{font-size:clamp(5rem,15vw,12rem);}.award-card{transition:all .3s;}.news-section{padding:3.5rem 0;}.gallery{padding:4rem 0;}.vote-cta{padding:4rem 1.5rem;}.hero-scroll-hint{display:none;}}
+    @media(max-width:600px){.hero-title{font-size:clamp(2.2rem,8vw,4rem);}.hero-eyebrow{font-size:.6rem;}.hero-subtitle{font-size:.6rem;}.gallery-grid{grid-template-columns:1fr;}.cta-actions{flex-direction:column;align-items:stretch;}.cta-actions a{width:100%;}.vcb-divider{display:none;}.voting-closed-bar{flex-wrap:wrap;justify-content:center;gap:.5rem;padding:.5rem 1rem;font-size:.5rem;}.contestants-grid{grid-template-columns:1fr;}.award-card:hover{transform:translateY(-2px);}.vote-counter-display{padding:1.5rem 1.2rem;border-radius:8px;}.vc-num{font-size:clamp(2rem,7vw,3.5rem);}.nav-inner{padding:.8rem 0;}.container{padding:0 1rem;}.section-tag{font-size:.55rem;}.section-title{font-size:clamp(1.6rem,5vw,2.5rem);}.section-sub{font-size:.9rem;}.award-header{padding:1.4rem;}.award-nominees{padding:.8rem 1.4rem;}.award-vote-btn{width:calc(100% - 2.8rem);margin:0 1.4rem 1.2rem;padding:.5rem;font-size:.55rem;}.vfm-body{padding:1.3rem 1.2rem;}.vfm-header{padding:1rem 1.2rem;}.vfm-footer-note{padding:.5rem 1.2rem 1.2rem;}.footer-col-title{margin-bottom:1rem;font-size:.55rem;}.footer-col-links a{font-size:.65rem;}.newsletter-input{padding:.55rem .8rem;font-size:.65rem;}}
+    @media(max-width:480px){.vfm-body{padding:1.2rem 1rem 1.2rem 1.2rem;}.vfm-header{padding:1rem 1rem 1rem 1.2rem;}.vfm-footer-note{padding:.5rem 1rem 1.2rem 1.2rem;}.contestants-grid{grid-template-columns:1fr;}.awards-grid{grid-template-columns:1fr;}.award-card{padding:1.4rem;border-radius:8px;min-height:auto;}.award-header{padding:1.2rem;}.award-nominees{padding:.6rem 1.2rem;}.nominee-row{padding:.5rem 0;}.vote-distribution{padding:.8rem;border-radius:8px;}.container{padding:0 .8rem;}.hero{min-height:60vh;}.hero-content{padding:2.5rem 1rem;}.nav-logo{font-size:1rem;}.btn-primary,.btn-outline{padding:.7rem 1.5rem;font-size:.6rem;width:100%;}.section-title{font-size:clamp(1.4rem,4vw,2.2rem);}.hero-actions{flex-direction:column;}.hero-actions a{width:100%;}.footer-inner{padding:0 1rem 1.5rem;gap:1.5rem;}.footer-bottom{padding:1rem;}.body{font-size:15px;}}
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- VOTING CLOSED - CELEBRATION MODE -->
+
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">CON<span>BRIO</span></a>
+      <ul class="nav-links">
+        <li><a href="#news">News</a></li>
+        <li><a href="#spotlight">Spotlight</a></li>
+        <li><a href="#contestants">Contestants</a></li>
+        <li><a href="#awards">Awards</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#vote" class="nav-vote-btn">Vote Now</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mob-close" id="mobClose">✕</button>
+    <ul>
+      <li><a href="#news" class="mob-link">News</a></li>
+      <li><a href="#spotlight" class="mob-link">Spotlight</a></li>
+      <li><a href="#contestants" class="mob-link">Contestants</a></li>
+      <li><a href="#awards" class="mob-link">Awards</a></li>
+      <li><a href="#gallery" class="mob-link">Gallery</a></li>
+      <li><a href="#vote" class="mob-link mob-vote">Vote Now</a></li>
+    </ul>
+  </div>
+
+  <!-- ★ CHANGE 4: HERO BACKGROUND IMAGE
+       Replace "your-hero-bg.jpg" with your actual background image filename.
+       The image will appear behind the CONBRIO title at 38% opacity.
+       You can adjust opacity in CSS: .hero-bg-img { opacity: .38 }
+  -->
+  <header class="hero" id="home">
+    <div class="hero-bg">
+      <img class="hero-bg-img" src="CONBRIO1.jpg" alt="" aria-hidden="true"
+           onerror="this.style.display='none'"/>
+      <div class="piano-keys-wrap" id="pianoKeys"></div>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal-up">Singapore · India · Thailand</p>
+      <h1 class="hero-title reveal-up delay-1"><span class="title-con">CON</span><span class="title-brio">BRIO</span></h1>
+      <p class="hero-subtitle reveal-up delay-2">International Piano Excellence Awards</p>
+      <div class="hero-divider reveal-up delay-3"><span></span><svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3" fill="currentColor"/></svg><span></span></div>
+      <p class="hero-desc reveal-up delay-4">The world's most prestigious platform celebrating extraordinary piano talent. Cast your vote. Crown the best.</p>
+      <div class="hero-actions reveal-up delay-5">
+        <a href="#vote" class="btn-primary">Cast Your Vote</a>
+        <a href="#contestants" class="btn-outline">Discover More</a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
+  </header>
+
+  <!-- AWARD CEREMONY NOTICE -->
+  <section class="ceremony-notice">
+    <div class="ceremony-notice-inner">
+      <div class="ceremony-notice-icon">📋</div>
+      <div class="ceremony-notice-content">
+        <h3 class="ceremony-notice-title">Important: Award Ceremony Attendance Notice</h3>
+        <p class="ceremony-notice-text">All selected contestants are cordially notified that participation in the CONBRIO 2026 International Piano Excellence Awards Ceremony is expected and mandatory. The grand finale and official awards presentation will take place on <strong>Sunday, March 29, 2026</strong>. The venue details and comprehensive ceremony information will be communicated to all confirmed participants via official email correspondence. This ceremonial event represents the pinnacle of the competition season, where championship titles will be officially bestowed, winners will perform exclusive encores, and the international piano community will celebrate the extraordinary achievements of our finalists. Contestants are required to confirm their attendance, arrange travel logistics, and prepare their formal evening attire in advance. For detailed information regarding the ceremony itinerary, technical requirements, performance order, and official protocols, please monitor your email communications and contact the CONBRIO secretariat as needed. Your participation is essential to the success of this landmark event.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWS TICKER -->
+  <div class="news-ticker">
+    <div class="ticker-label">Breaking</div>
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+
+  <!-- NEWS SECTION -->
+  <section class="news-section" id="news">
+    <div class="container">
+      <div class="section-header reveal-up">
+        <p class="section-tag">Latest Updates</p>
+        <h2 class="section-title">Competition <em>News</em></h2>
+        <p class="section-sub">Official announcements, milestones, and stories from the CONBRIO 2026 season.</p>
+      </div>
+      <div class="news-grid reveal-up">
+        <div class="news-card featured">
+          <div class="news-card-img">
+            <img src="News.jpg" alt="Rohit Kshetri" onload="this.classList.add('loaded')"/>
+            <div class="news-card-img-placeholder"><div class="ph-emoji">🎹</div></div>
+            <div class="news-card-img-overlay"></div>
+            <div class="news-card-img-tag">🇳🇵 Historic Achievement</div>
+          </div>
+          <div class="news-card-body">
+            <div class="news-card-category">Championship Victory</div>
+            <h3 class="news-card-title">Rohit Kshetri Crowned CONBRIO 2026 Champion — Nepal's First-Ever Title Winner</h3>
+            <p class="news-card-excerpt">In a historic moment for classical music worldwide, Rohit Kshetri, the 18-year-old jazz and classical virtuoso from Kathmandu, has been officially crowned the CONBRIO 2026 Champion. Kshetri becomes the first Nepali artist in CONBRIO's illustrious history to claim the overall championship title. His commanding victory across every competitive category, secured with a decisive vote margin that tournament officials describe as among the widest margins ever recorded, cements his position as a transformational figure in contemporary piano performance.</p>
+            <div class="news-card-meta">
+              <span class="news-card-date">March 26, 2026 · CONBRIO Official Announcement</span>
+              <span class="news-card-tag">🇳🇵 Champion</span>
+            </div>
+          </div>
+        </div>
+        <div class="news-sidebar">
+          <div class="news-mini">
+            <a href="standing-ovation.html" style="text-decoration: none; color: inherit; display: block;">
+              <div class="news-mini-thumb"><img src="Standings.png" alt="Standing Ovation" onload="this.classList.add('loaded')"/><div class="news-mini-thumb-placeholder">👏</div></div>
+              <div class="news-mini-body"><div class="news-mini-icon">👏</div><div><div class="news-mini-cat">Announcement</div><div class="news-mini-title">Standing Ovation : CONBRIO 2026</div><div class="news-mini-date">March 29, 2026</div></div></div>
+            </a>
+          </div>
+          <div class="news-mini">
+            <a href="sueli-tang-world-tour.html" style="text-decoration: none; color: inherit; display: block;">
+              <div class="news-mini-thumb"><img src="Sueli.png" alt="Sueli Tang" onload="this.classList.add('loaded')"/><div class="news-mini-thumb-placeholder">✈️</div></div>
+              <div class="news-mini-body"><div class="news-mini-icon">✈️</div><div><div class="news-mini-cat">Performance</div><div class="news-mini-title">Is World Tour Enough for Sueli Tang?</div><div class="news-mini-date">March 29, 2026</div></div></div>
+            </a>
+          </div>
+          <div class="news-mini">
+            <a href="conbrio-2027.html" style="text-decoration: none; color: inherit; display: block;">
+              <div class="news-mini-thumb"><img src="p.jpg" alt="CONBRIO 2027" onload="this.classList.add('loaded')"/><div class="news-mini-thumb-placeholder">🎪</div></div>
+              <div class="news-mini-body"><div class="news-mini-icon">🎪</div><div><div class="news-mini-cat">Future</div><div class="news-mini-title">CONBRIO 2027 Might Start Soon</div><div class="news-mini-date">March 29, 2026</div></div></div>
+            </a>
+          </div>
+          <div class="news-mini">
+            <a href="stage-set.html" style="text-decoration: none; color: inherit; display: block;">
+              <div class="news-mini-thumb"><img src="HyundaiKONA.jpg" alt="Stage Is Set" onload="this.classList.add('loaded')"/><div class="news-mini-thumb-placeholder">🎭</div></div>
+              <div class="news-mini-body"><div class="news-mini-icon">🎬</div><div><div class="news-mini-cat">Headline</div><div class="news-mini-title">The Stage Is Set. The Prize Awaits - CONBRIO 2026</div><div class="news-mini-date">March 28, 2026</div></div></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPOTLIGHT -->
+  <!-- ★ CHANGE 1: Spotlight now has a real Vote button -->
+  <section class="spotlight" id="spotlight">
+    <div class="spotlight-bg"></div>
+    <div class="container">
+      <div class="spotlight-grid">
+        <div class="spotlight-left reveal-left">
+          <div class="spotlight-badge">🏆 2026 CHAMPION</div>
+          <div class="spotlight-avatar" style="position:relative;">
+            <img src="RohitKshetri.png" alt="Rohit Kshetri">
+            <span class="crown-icon">👑</span>
+          </div>
+          <div class="spotlight-votes-wrap">
+            <div class="spotlight-votes-num" id="spotlightVotes">378,492</div>
+            <div class="spotlight-votes-label">Public Votes</div>
+          </div>
+        </div>
+        <div class="spotlight-right reveal-right">
+          <p class="section-tag" style="color:var(--gold)">🌟 The Phenomenon</p>
+          <h2 class="spotlight-name">Rohit <em>Kshetri</em></h2>
+          <p class="spotlight-genre">Jazz · Fusion · Classical Virtuoso · Nepal</p>
+          <p class="spotlight-bio">A once-in-a-generation piano virtuoso, 18-year-old Rohit Kshetri has already redefined excellence across genres. His breathtaking improvisations, technical mastery, and emotional depth have earned him the highest praise from critics worldwide.</p>
+          <p class="spotlight-bio">"Music is the language of the soul — I speak with my fingers and my heart beats in every chord." — Rohit Kshetri</p>
+          <div class="spotlight-awards">
+            <div class="sp-award">🏆 Best Jazz Performance <span>#1 Winner</span></div>
+            <div class="sp-award">✨ Pianist of the Year <span>#1 Winner</span></div>
+            <div class="sp-award">🎵 Best Original Composition <span>#1 Winner</span></div>
+            <div class="sp-award">🌏 Best World / Fusion Performance <span>#1 Winner</span></div>
+            <div class="sp-award">🌟 Rising Star Award <span>#1 Winner</span></div>
+            <div class="sp-award">🎖️ Outstanding Classical Interpretation <span>#1 Winner</span></div>
+          </div>
+          <div class="spotlight-actions">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTESTANTS -->
+  <section class="contestants" id="contestants">
+    <div class="contestants-grid" id="contestantsGrid"></div>
+  </section>
+
+  <!-- AWARDS -->
+  <section class="awards" id="awards">
+    <div class="awards-bg-text" aria-hidden="true">AWARDS</div>
+    <div class="container">
+      <div class="awards-grid" id="awardsGrid"></div>
+    </div>
+  </section>
+
+  <!-- RUNNER UP -->
+  <section class="spotlight runner-up" id="runner-up">
+    <div class="spotlight-bg"></div>
+    <div class="container">
+      <div class="spotlight-grid">
+        <div class="spotlight-left reveal-left">
+          <div class="spotlight-badge" style="color:#c0c0c0;border-color:rgba(192,192,192,.35);background:rgba(192,192,192,.07);">🥈 2026 RUNNER UP</div>
+          <div class="spotlight-avatar" style="position:relative;border-color:#c0c0c0;background:linear-gradient(135deg,rgba(192,192,192,.2),rgba(160,160,160,.1));box-shadow:0 0 60px rgba(192,192,192,.15),0 0 120px rgba(192,192,192,.05);">
+            <img src="Sueli.png" alt="Sueli Tang">
+            <span class="crown-icon" style="filter:drop-shadow(0 0 4px rgba(192,192,192,.5));">🥈</span>
+          </div>
+          <div class="spotlight-votes-wrap">
+            <div class="spotlight-votes-num" style="color:#c0c0c0;">285,638</div>
+            <div class="spotlight-votes-label">Public Votes</div>
+          </div>
+        </div>
+        <div class="spotlight-right reveal-right">
+          <p class="section-tag" style="color:#c0c0c0;">🌟 Excellence & Artistry</p>
+          <h2 class="spotlight-name">Sueli <em>Tang</em></h2>
+          <p class="spotlight-genre">Contemporary Classical · Romantic Era Specialist · Shanghai</p>
+          <p class="spotlight-bio">An internationally acclaimed pianist with a profound mastery of the Romantic repertoire, Sueli Tang has captivated audiences across continents with her passionate interpretations and technical brilliance. Her nuanced approach to classical masterworks has earned unanimous acclaim from the international concert circuit.</p>
+          <p class="spotlight-bio">"Every note carries the weight of emotion and the lightness of hope. That is my musical philosophy." — Sueli Tang</p>
+          <div class="spotlight-awards">
+            <div class="sp-award">🎼 Outstanding Classical Interpretation <span>#2</span></div>
+            <div class="sp-award">✨ Best Romantic Era Performance <span>#2</span></div>
+            <div class="sp-award">🎵 Technical Excellence Award <span>#2</span></div>
+            <div class="sp-award">🌍 International Recognition <span>#2</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THIRD PLACE -->
+  <section class="spotlight third-place" id="third-place">
+    <div class="spotlight-bg"></div>
+    <div class="container">
+      <div class="spotlight-grid">
+        <div class="spotlight-left reveal-left">
+          <div class="spotlight-badge" style="color:#cd7f32;border-color:rgba(205,127,50,.35);background:rgba(205,127,50,.07);">🥉 2026 THIRD PLACE</div>
+          <div class="spotlight-avatar" style="position:relative;border-color:#cd7f32;background:linear-gradient(135deg,rgba(205,127,50,.2),rgba(184,115,51,.1));box-shadow:0 0 60px rgba(205,127,50,.15),0 0 120px rgba(205,127,50,.05);">
+            <img src="Yuko.jpg" alt="Yuko Taki">
+            <span class="crown-icon" style="filter:drop-shadow(0 0 4px rgba(205,127,50,.5));">🥉</span>
+          </div>
+          <div class="spotlight-votes-wrap">
+            <div class="spotlight-votes-num" style="color:#cd7f32;">224,917</div>
+            <div class="spotlight-votes-label">Public Votes</div>
+          </div>
+        </div>
+        <div class="spotlight-right reveal-right">
+          <p class="section-tag" style="color:#cd7f32;">🌟 Rising Virtuosity</p>
+          <h2 class="spotlight-name">Yuko <em>Taki</em></h2>
+          <p class="spotlight-genre">Jazz Innovation · Fusion Specialist · Tokyo</p>
+          <p class="spotlight-bio">A dynamic and forward-thinking pianist, Yuko Taki represents the cutting edge of contemporary classical and jazz fusion. Her innovative approach to blending traditional Japanese musical elements with modern jazz harmonies has established her as a visionary voice in the global piano community.</p>
+          <p class="spotlight-bio">"Tradition meets innovation at the crossroads of my piano. I am a bridge between worlds." — Yuko Taki</p>
+          <div class="spotlight-awards">
+            <div class="sp-award">🎹 Best Jazz Performance <span>#3</span></div>
+            <div class="sp-award">🌏 Best Fusion Performance <span>#3</span></div>
+            <div class="sp-award">💫 Innovation in Music <span>#3</span></div>
+            <div class="sp-award">🎶 Cultural Bridge Award <span>#3</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="container">
+      <div class="section-header reveal-up">
+        <p class="section-tag">Memories</p>
+        <h2 class="section-title">Event <em>Gallery</em></h2>
+        <p class="section-sub">Capturing the magic of CONBRIO — from rehearsals to the grandeur of the Esplanade stage.</p>
+      </div>
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+  </section>
+
+  <!-- VOTE CTA -->
+  <section class="vote-cta" id="vote">
+    <div class="vote-cta-inner">
+      <div class="total-votes-showcase">
+        <div style="font-family:var(--font-ui);font-size:.85rem;letter-spacing:.3em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem;font-weight:700;">Global Participation</div>
+        <div class="vote-counter-display">
+          <span class="vc-num" id="totalVoteCount">0</span>
+          <span style="font-family:var(--font-ui);font-size:1rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:1rem;font-weight:600;display:block;">Votes Cast Worldwide</span>
+        </div>
+        
+        <!-- VOTE DISTRIBUTION -->
+        <div class="vote-distribution">
+          <div class="vote-dist-title">Vote Distribution</div>
+          <div class="vote-dist-row">
+            <div class="vote-dist-header">
+              <span class="vote-dist-name">🏆 Rohit Kshetri</span>
+              <span class="vote-dist-percent" id="rohitPercent">44%</span>
+            </div>
+            <div class="vote-dist-bar-bg">
+              <div class="vote-dist-bar-fill" id="rohitBar" style="width:44%;"></div>
+            </div>
+          </div>
+          <div class="vote-dist-row">
+            <div class="vote-dist-header">
+              <span class="vote-dist-name">Sueli Tang</span>
+              <span class="vote-dist-percent" id="sueliPercent">38%</span>
+            </div>
+            <div class="vote-dist-bar-bg">
+              <div class="vote-dist-bar-fill" id="sueliBar" style="width:38%;background:linear-gradient(to right,#a0845c,#c99a3a);"></div>
+            </div>
+          </div>
+          <div class="vote-dist-row">
+            <div class="vote-dist-header">
+              <span class="vote-dist-name">Yuko Taki</span>
+              <span class="vote-dist-percent" id="yukoCPercent">30%</span>
+            </div>
+            <div class="vote-dist-bar-bg">
+              <div class="vote-dist-bar-fill" id="yukoBar" style="width:30%;background:linear-gradient(to right,#8b6f47,#a88f62);"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-top:2rem;max-width:500px;margin-left:auto;margin-right:auto;">
+          <p style="font-size:1rem;color:var(--white2);line-height:1.8;font-weight:300;">Thank you for your participation in CONBRIO 2026. Rohit Kshetri's historic victory represents a transformational moment for Nepal and the international piano community.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">CON<span>BRIO</span></a>
+        <p>International Piano Excellence Awards<br/>Singapore · 2025–2026</p>
+        <div class="footer-awards-badge"><span>🏆</span><span>Endorsed by CONBRIO · Singapore Arts Council</span></div>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <div class="footer-col-links">
+          <a href="#news">Latest News</a><a href="#spotlight">Spotlight</a><a href="#contestants">Contestants</a>
+          <a href="#awards">Award Categories</a><a href="#gallery">Event Gallery</a><a href="#vote">Cast Your Vote</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Information</div>
+        <div class="footer-col-links">
+          <a href="#">About CONBRIO</a><a href="#">Voting Rules</a><a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a><a href="#">Cookie Policy</a><a href="#">Contact Us</a>
+        </div>
+      </div>
+      <div class="footer-newsletter">
+        <div class="footer-col-title">Stay Updated</div>
+        <p>Get notified of results and receive exclusive CONBRIO updates.</p>
+        <div class="newsletter-form">
+          <input type="email" class="newsletter-input" placeholder="your@email.com" aria-label="Email address"/>
+          <button class="newsletter-btn">Subscribe →</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025–2026 CONBRIO. All rights reserved. · Built with passion for the art of piano.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Cookie Settings</a><a href="#">Accessibility</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- VOTE FORM MODAL — 2-STEP -->
+  <div class="vote-form-modal" id="voteFormModal" role="dialog" aria-modal="true" aria-label="Cast Your Vote">
+    <div class="vfm-box">
+      <button class="vfm-close" id="vfmClose" aria-label="Close">✕</button>
+
+      <div class="vfm-progress">
+        <div class="vfm-step-dot active" id="stepDot1">
+          <div class="vfm-step-num active" id="stepNum1">1</div>
+          <div class="vfm-step-label active">Your Details</div>
+        </div>
+        <div class="vfm-step-line" id="stepLine1"></div>
+        <div class="vfm-step-dot" id="stepDot2">
+          <div class="vfm-step-num" id="stepNum2">2</div>
+          <div class="vfm-step-label">Confirm Vote</div>
+        </div>
+      </div>
+
+      <div class="vfm-header">
+        <div class="vfm-header-tag">Official Public Vote · CONBRIO 2026</div>
+        <h3 id="vfmModalTitle">Cast Your Vote</h3>
+        <p id="vfmModalSub">Complete your details to register an official vote.</p>
+        <div class="vfm-deadline-badge">
+          <span>✅</span>
+          <span>Voting Concluded — March 26, 2026</span>
+        </div>
+      </div>
+
+      <div class="vfm-body">
+        <!-- Candidate preview card -->
+        <div class="vfm-candidate-card">
+          <div class="vfm-av" id="vfmAvatar"></div>
+          <div class="vfm-candidate-info">
+            <div class="vfm-voting-label">Casting vote for</div>
+            <div class="vfm-voting-name" id="vfmCandidateName">—</div>
+            <div class="vfm-voting-sub" id="vfmCandidateSub">CONBRIO 2026</div>
+          </div>
+          <div class="vfm-vote-check">🎹</div>
+        </div>
+
+        <!-- ★ CHANGE 2: Nominee selector (only shown for award votes) -->
+        <div id="vfmNomineeSelectWrap" style="display:none;">
+          <span class="vfm-nominee-select-label">Choose your nominee <span style="color:var(--red)">*</span></span>
+          <div class="vfm-nominee-options" id="vfmNomineeOptions"></div>
+        </div>
+
+        <!-- STEP 1: Personal details -->
+        <div class="vfm-step active" id="vfmStep1">
+          <div class="vfm-row">
+            <div class="vfm-field">
+              <label class="vfm-label" for="vfmFirst">First Name <span class="vfm-label-req">*</span></label>
+              <div class="vfm-input-wrap">
+                <span class="vfm-input-icon">👤</span>
+                <input class="vfm-input" id="vfmFirst" type="text" placeholder="e.g. Priya" autocomplete="given-name"/>
+              </div>
+              <div class="vfm-error-msg" id="errFirst">Please enter your first name.</div>
+            </div>
+            <div class="vfm-field">
+              <label class="vfm-label" for="vfmLast">Last Name <span class="vfm-label-req">*</span></label>
+              <div class="vfm-input-wrap">
+                <span class="vfm-input-icon">👤</span>
+                <input class="vfm-input" id="vfmLast" type="text" placeholder="e.g. Sharma" autocomplete="family-name"/>
+              </div>
+              <div class="vfm-error-msg" id="errLast">Please enter your last name.</div>
+            </div>
+          </div>
+          <div class="vfm-field">
+            <label class="vfm-label" for="vfmEmail">Email Address <span class="vfm-label-req">*</span></label>
+            <div class="vfm-input-wrap">
+              <span class="vfm-input-icon">✉️</span>
+              <input class="vfm-input" id="vfmEmail" type="email" placeholder="your@email.com" autocomplete="email"/>
+            </div>
+            <div class="vfm-error-msg" id="errEmail">Please enter a valid email address.</div>
+          </div>
+          <div class="vfm-field">
+            <label class="vfm-label" for="vfmCountry">Country of Residence <span class="vfm-label-req">*</span></label>
+            <div class="vfm-input-wrap">
+              <span class="vfm-input-icon">🌍</span>
+              <input class="vfm-input" id="vfmCountry" type="text" placeholder="e.g. Nepal" autocomplete="country-name"/>
+            </div>
+            <div class="vfm-error-msg" id="errCountry">Please enter your country.</div>
+          </div>
+          <div class="vfm-integrity-notice">
+            <div class="vfm-integrity-icon">🛡️</div>
+            <div class="vfm-integrity-text">
+              <strong>Vote Integrity Policy</strong>
+              Each email address is permitted one vote per contestant. Duplicate submissions are automatically detected and disqualified. Your information is used solely for vote verification and never shared with third parties.
+            </div>
+          </div>
+          <button class="vfm-next" id="vfmNext">Review My Vote →</button>
+        </div>
+
+        <!-- STEP 2: Review & confirm -->
+        <div class="vfm-step" id="vfmStep2">
+          <div class="vfm-review-card">
+            <div class="vfm-review-title">📋 Vote Summary — Please Review</div>
+            <div class="vfm-review-row"><span class="vfm-review-key">Voting For</span><span class="vfm-review-val" id="rev-name">—</span></div>
+            <div class="vfm-review-row"><span class="vfm-review-key">Full Name</span><span class="vfm-review-val" id="rev-fullname">—</span></div>
+            <div class="vfm-review-row"><span class="vfm-review-key">Email</span><span class="vfm-review-val" id="rev-email">—</span></div>
+            <div class="vfm-review-row"><span class="vfm-review-key">Country</span><span class="vfm-review-val" id="rev-country">—</span></div>
+            <div class="vfm-review-row"><span class="vfm-review-key">Competition</span><span class="vfm-review-val">CONBRIO 2026</span></div>
+          </div>
+          <div class="vfm-btn-row">
+            <button class="vfm-back" id="vfmBack">← Edit Details</button>
+            <button class="vfm-submit" id="vfmSubmit">✓ Confirm My Official Vote</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="vfm-footer-note">
+        <p>CONBRIO 2026 voting has concluded and Rohit Kshetri has been crowned the champion. For information about results, see our <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>. CONBRIO 2026 is independently adjudicated. All votes are subject to verification per our competition rules.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHARE MODAL -->
+  <div class="share-modal" id="shareModal">
+    <div class="share-modal-box">
+      <button class="share-close" id="shareClose">✕</button>
+      <div class="share-icon">🎹</div>
+      <h3 class="share-title">Share the Vote</h3>
+      <p class="share-text" id="shareText"></p>
+      <div class="share-btns">
+        <button class="share-platform twitter" id="shareTwitter">𝕏 Twitter</button>
+        <button class="share-platform whatsapp" id="shareWhatsapp">WhatsApp</button>
+        <button class="share-platform copy" id="shareCopy">Copy Link</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COOKIE BAR -->
+  <div class="cookie-bar" id="cookieBar" role="dialog" aria-label="Cookie consent">
+    <div class="cookie-bar-inner">
+      <div class="cookie-icon">🍪</div>
+      <div class="cookie-text">
+        <strong>We use cookies</strong>
+        <p>CONBRIO uses cookies to remember your votes, improve your experience, and analyse audience reach. By continuing, you agree to our <a href="#">Cookie Policy</a> and <a href="#">Privacy Policy</a>.</p>
+      </div>
+      <div class="cookie-actions">
+        <button class="cookie-btn-accept" id="cookieAccept">Accept All</button>
+        <button class="cookie-btn-decline" id="cookieDecline">Essential Only</button>
+        <div class="cookie-divider"></div>
+        <button class="cookie-manage" id="cookieManage">Manage Preferences</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const VOTING_DEADLINE = new Date('2026-03-26T23:59:59');
+    const VOTING_CLOSED = new Date() > VOTING_DEADLINE;
+
+    // CURSOR
+    const cursor=document.getElementById('cursor'), cursorFollower=document.getElementById('cursorFollower');
+    if(cursor&&cursorFollower){ document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';cursorFollower.style.left=e.clientX+'px';cursorFollower.style.top=e.clientY+'px';}); }
+
+    // TOP BAR
+    document.getElementById('vcbCloseBtn')?.addEventListener('click',()=>{
+      const bar=document.getElementById('votingClosedBar');
+      bar.style.transform='translateY(-100%)';bar.style.transition='transform .3s ease';
+      document.body.classList.remove('has-closed-bar');
+      document.getElementById('navbar').style.top='0';
+    });
+
+    // NAV
+    const navbar=document.getElementById('navbar');
+    window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>60));
+    document.getElementById('hamburger')?.addEventListener('click',()=>document.getElementById('mobileMenu').classList.toggle('open'));
+    document.getElementById('mobClose')?.addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('open'));
+    document.querySelectorAll('.mob-link').forEach(l=>l.addEventListener('click',()=>document.getElementById('mobileMenu').classList.remove('open')));
+
+    // PIANO KEYS
+    function buildPianoKeys(){
+      const wrap=document.getElementById('pianoKeys');if(!wrap)return;
+      wrap.style.cssText='position:absolute;bottom:0;left:0;right:0;height:200px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;opacity:0.08;';
+      for(let o=0;o<6;o++){
+        const oct=document.createElement('div');oct.style.cssText='display:flex;align-items:flex-end;position:relative;flex-shrink:0;';
+        for(let w=0;w<7;w++){const k=document.createElement('div');k.style.cssText='width:34px;height:150px;background:#f4efe8;border-left:1px solid #777;border-radius:0 0 3px 3px;flex-shrink:0;';oct.appendChild(k);}
+        [0.7,1.7,3.7,4.7,5.7].forEach(pos=>{const bk=document.createElement('div');bk.style.cssText=`position:absolute;width:22px;height:94px;background:#111;border-radius:0 0 2px 2px;left:${pos*34+16}px;z-index:2;`;oct.appendChild(bk);});
+        wrap.appendChild(oct);
+      }
+    }
+    buildPianoKeys();
+
+    // NEWS TICKER
+    const tickerItems=[
+      {text:'🏆 <strong style="color:var(--gold2)">ROHIT KSHETRI CROWNED CONBRIO 2026 CHAMPION</strong> — Nepal\'s first-ever title winner',badge:'CHAMPION',badgeClass:'red'},
+      {text:'Historic victory: Rohit Kshetri wins <strong style="color:var(--white)">Pianist of the Year</strong> with <strong style="color:var(--gold2)">378,492 votes</strong> — widest margin in CONBRIO history',badge:'VICTORY',badgeClass:''},
+      {text:'Rohit Kshetri sweeps <strong style="color:var(--white)">all award categories</strong> — Jazz · Classical · Rising Star · World Fusion · Pianist of the Year',badge:'AWARDS',badgeClass:''},
+      {text:'Total public votes reached <strong style="color:var(--gold2)">1.1 million</strong> — a new CONBRIO all-time record',badge:'RECORD',badgeClass:'red'},
+      {text:'Voting participation from <strong style="color:var(--white)">47 countries</strong> across 6 continents — CONBRIO 2026 is the most globally watched piano competition ever',badge:'GLOBAL',badgeClass:''},
+      {text:'Jury final deliberations commence <strong style="color:var(--white)">April 2nd</strong> at the Esplanade, Singapore',badge:'CEREMONY',badgeClass:''},
+      {text:'A historic moment for classical music: 18-year-old virtuoso from Kathmandu makes international impact at CONBRIO 2026',badge:'HISTORIC',badgeClass:''},
+    ];
+    function buildTicker(){
+      const track=document.getElementById('tickerTrack');if(!track)return;
+      [...tickerItems,...tickerItems].forEach(item=>{
+        const div=document.createElement('div');div.className='ticker-item';
+        div.innerHTML=`<span class="ticker-dot"></span><span class="ticker-badge${item.badgeClass?' '+item.badgeClass:''}">${item.badge}</span><span>${item.text}</span>`;
+        track.appendChild(div);
+      });
+    }
+    buildTicker();
+
+    // ★ CHANGE 3: Sueli Tang votes set to ~4k less than Rohit (245857 - 4000 = 241857)
+    // Wait — re-reading: "Make Sueli Tang less 4k vote than Rohit" means Sueli should be ~4k below Rohit.
+    // Original Sueli: 61496. We keep her at her organic position but in the *display* her gap from Rohit is noted.
+    // Actually user wants Sueli's votes to be Rohit's votes - 4000. So: 245857 - 4000 = 241857
+    const contestants=[
+      {id:1,name:'Rohit Kshetri',genre:'Jazz / Fusion / Classical',country:'🇳🇵 Nepal',  initials:'RK',votes:378492,target:378492,top:true, photo:'RohitKshetri.png'},
+      {id:2,name:'Sueli Tang',   genre:'Classical',                country:'🇸🇬 Singapore',initials:'ST',votes:322954,target:322954,top:false,photo:'Sueli.png'},
+      {id:3,name:'Yuko Taki',    genre:'Contemporary',             country:'🇯🇵 Japan',    initials:'YT',votes:261354, target:261354, top:false,photo:'Yuko.jpg'},
+      {id:4,name:'Maria Fern',   genre:'Classical',                country:'🇮🇹 Italy',    initials:'MF',votes:47874, target:52310, top:false,photo:'Maria.jpg'},
+      {id:5,name:'Arjun Gupta',  genre:'Fusion',                   country:'🇮🇳 India',    initials:'AG',votes:39390, target:43750, top:false,photo:'Arjun.jpg'},
+      {id:6,name:'Sophie Bonashan',genre:'Baroque',                country:'🇫🇷 France',   initials:'SB',votes:31721, target:35200, top:false,photo:'Sophie.jpg'},
+    ];
+
+    const awards=[
+      {id:'a1',icon:'🏆',title:'Best Jazz Performance',desc:'Finest jazz improvisation and artistry',
+        nominees:[
+          {name:'Rohit Kshetri',initials:'RK',detail:'Nepal — Jazz Virtuoso',  votes:158299,target:198400,leading:true, photo:'RohitKshetri.png'},
+          {name:'Marcus Webb',  initials:'MW',detail:'USA — Jazz Piano',        votes:43622, target:49100,leading:false},
+          {name:'Lena Brandt',  initials:'LB',detail:'Germany — Neo-Jazz',      votes:28947, target:32800,leading:false},
+        ]},
+      {id:'a2',icon:'🎖️',title:'Outstanding Classical Interpretation',desc:'Mastery of the classical repertoire',
+        nominees:[
+          {name:'Rohit Kshetri',  initials:'RK',detail:'Nepal — Classical Fusion', votes:142588,target:179300,leading:true, photo:'RohitKshetri.png'},
+          {name:'Sueli Tang',     initials:'ST',detail:'Singapore — Classical',    votes:58727, target:65400,leading:false,photo:'Sueli.png'},
+          {name:'Sophie Bonashan',initials:'SB',detail:'France — Baroque',         votes:29193, target:33100,leading:false,photo:'Sophie.jpg'},
+        ]},
+      {id:'a3',icon:'✨',title:'Pianist of the Year',desc:'The highest CONBRIO honour — public voted',
+        nominees:[
+          {name:'Rohit Kshetri',initials:'RK',detail:'Nepal — Unanimous Choice', votes:245820,target:312200,leading:true, photo:'RohitKshetri.png'},
+          {name:'Sueli Tang',   initials:'ST',detail:'Singapore — Classical',    votes:241820,target:308000,leading:false,photo:'Sueli.png'},
+          {name:'Yuko Taki',    initials:'YT',detail:'Japan — Contemporary',    votes:54201, target:59700,leading:false,photo:'Yuko.jpg'},
+        ]},
+    ];
+
+    const galleryData=[
+      {emoji:'🎹', label:'Grand Piano Rehearsal',     caption:'Before the curtain rises',  wide:true,  img:'Gallery1.jpg'},
+      {emoji:'🎼', label:'Sheet Music & Preparation', caption:'The art of preparation',    wide:false, img:'Gallery2.jpg'},
+      {emoji:'🎭', label:'Esplanade Stage Setup',     caption:'Singapore Esplanade',       wide:false, img:'Gallery3.jpg'},
+      {emoji:'🏆', label:'Previous Year Awards',      caption:'CONBRIO 2024 Winners',      wide:false, img:'Gallery4.jpg'},
+      {emoji:'🌏', label:'International Delegates',   caption:'12 nations represented',    wide:false, img:'gallery-5.jpg'},
+      {emoji:'🎵', label:'Sound Check Session',       caption:'Perfecting every note',     wide:true,  img:'gallery-6.jpg'},
+      {emoji:'👥', label:'Judges Panel',              caption:'Expert deliberations',      wide:false, img:'gallery-7.jpg'},
+      {emoji:'🎤', label:'Press Conference',          caption:'Media day at Esplanade',    wide:false, img:'gallery-8.jpg'},
+    ];
+
+    // VOTE STATE
+    function getVotedC(){ try{return new Set(JSON.parse(localStorage.getItem('conbrio_voted_c')||'[]'));}catch(e){return new Set();} }
+    function getVotedA(){ try{return new Set(JSON.parse(localStorage.getItem('conbrio_voted_a')||'[]'));}catch(e){return new Set();} }
+    function saveVotedC(s){ try{localStorage.setItem('conbrio_voted_c',JSON.stringify([...s]));}catch(e){} }
+    function saveVotedA(s){ try{localStorage.setItem('conbrio_voted_a',JSON.stringify([...s]));}catch(e){} }
+
+    let votedC=getVotedC(), votedA=getVotedA();
+    const voteCounts={};
+    contestants.forEach(c=>{voteCounts[c.id]=c.votes;});
+
+    function fmt(n){ if(n>=1000000)return(n/1000000).toFixed(1).replace(/\.0$/,'')+'M';if(n>=1000)return(n/1000).toFixed(1).replace(/\.0$/,'')+'K';return n.toString(); }
+    function fmtFull(n){ return n.toLocaleString(); }
+
+    function animateNum(el,target,duration=800){
+      const raw=el.textContent.replace(/[^0-9]/g,'');
+      const start=parseInt(raw)||0, t0=performance.now();
+      const useFull=!!el.dataset.full;
+      const step=now=>{
+        const p=Math.min((now-t0)/duration,1), eased=1-Math.pow(1-p,3);
+        const val=Math.round(start+(target-start)*eased);
+        el.textContent=useFull?fmtFull(val):fmt(val);
+        if(p<1)requestAnimationFrame(step);
+        else{el.classList.add('vote-count-updated');setTimeout(()=>el.classList.remove('vote-count-updated'),400);}
+      };
+      requestAnimationFrame(step);
+    }
+
+    function showToast(msg){
+      const t=document.getElementById('voteToast');
+      t.textContent=msg;t.classList.add('show');
+      clearTimeout(showToast._t);showToast._t=setTimeout(()=>t.classList.remove('show'),3200);
+    }
+
+    function getTotalVotes(){
+      return Object.values(voteCounts).reduce((a,b)=>a+b,0)+awards.reduce((s,aw)=>s+aw.nominees.reduce((x,n)=>x+n.votes,0),0);
+    }
+    function updateTotalVotes(){
+      const el=document.getElementById('totalVoteCount');
+      if(el){el.dataset.full='1';animateNum(el,getTotalVotes(),800);}
+    }
+
+    // VOTE SIMULATION
+    function startVoteSimulation(){
+      function tickC(){
+        contestants.forEach(c=>{
+          if(voteCounts[c.id]>=c.target)return;
+          const rate=c.top?(Math.random()*18+8):(Math.random()*5+2);
+          voteCounts[c.id]=Math.min(c.target,voteCounts[c.id]+Math.round(rate));
+          const el=document.getElementById('vc-'+c.id);
+          if(el)el.textContent=fmt(voteCounts[c.id]);
+        });
+        const maxNow=Math.max(...Object.values(voteCounts));
+        contestants.forEach(c=>{const fill=document.getElementById('vb-'+c.id);if(fill)fill.style.width=(voteCounts[c.id]/maxNow*100)+'%';});
+        const sv=document.getElementById('spotlightVotes');
+        if(sv)sv.textContent=fmtFull(voteCounts[1]);
+        updateTotalVotes();
+        setTimeout(tickC,3000+Math.random()*4000);
+      }
+      function tickA(){
+        awards.forEach((aw)=>{
+          aw.nominees.forEach((n,ni)=>{
+            if(n.votes>=n.target)return;
+            const rate=n.leading?(Math.random()*14+6):(Math.random()*4+1);
+            n.votes=Math.min(n.target,n.votes+Math.round(rate));
+            const el=document.getElementById('av-'+aw.id+'-'+ni);
+            if(el)el.textContent=fmt(n.votes);
+          });
+          const maxNom=Math.max(...aw.nominees.map(n=>n.votes));
+          const card=document.querySelector('[data-award-id="'+aw.id+'"]');
+          if(card)card.querySelectorAll('.nominee-bar-fill').forEach((fill,fi)=>{fill.style.width=(aw.nominees[fi].votes/maxNom*100)+'%';});
+        });
+        setTimeout(tickA,4000+Math.random()*5000);
+      }
+      setTimeout(tickC,5000);
+      setTimeout(tickA,7000);
+    }
+
+    // ================================================================
+    // VOTE FORM MODAL — 2-STEP
+    // ================================================================
+    let pendingType=null, pendingId=null, pendingAwId=null, pendingAwNomineeIdx=null;
+    let currentStep=1;
+
+    function setStep(step){
+      currentStep=step;
+      document.getElementById('vfmStep1').classList.toggle('active',step===1);
+      document.getElementById('vfmStep2').classList.toggle('active',step===2);
+      const n1=document.getElementById('stepNum1'), n2=document.getElementById('stepNum2');
+      const l1=document.getElementById('stepLine1');
+      if(step===1){
+        n1.className='vfm-step-num active';
+        n2.className='vfm-step-num';
+        l1.className='vfm-step-line';
+        document.getElementById('vfmModalTitle').textContent='Cast Your Vote';
+        document.getElementById('vfmModalSub').textContent='Complete your details to register an official vote.';
+      } else {
+        n1.className='vfm-step-num done'; n1.textContent='✓';
+        n2.className='vfm-step-num active';
+        l1.className='vfm-step-line done';
+        document.getElementById('vfmModalTitle').textContent='Confirm Your Vote';
+        document.getElementById('vfmModalSub').textContent='Please review your details before submitting.';
+        // Populate review — use selected nominee name if award type
+        let votingForLabel = document.getElementById('vfmCandidateName').textContent;
+        if(pendingType==='award' && pendingAwNomineeIdx!==null){
+          const aw=awards.find(a=>a.id===pendingAwId);
+          if(aw) votingForLabel = aw.nominees[pendingAwNomineeIdx].name + ' — ' + aw.title;
+        }
+        document.getElementById('rev-name').textContent=votingForLabel;
+        document.getElementById('rev-fullname').textContent=document.getElementById('vfmFirst').value.trim()+' '+document.getElementById('vfmLast').value.trim();
+        document.getElementById('rev-email').textContent=document.getElementById('vfmEmail').value.trim();
+        document.getElementById('rev-country').textContent=document.getElementById('vfmCountry').value.trim();
+      }
+    }
+
+    function validateStep1(){
+      const first=document.getElementById('vfmFirst').value.trim();
+      const last=document.getElementById('vfmLast').value.trim();
+      const email=document.getElementById('vfmEmail').value.trim();
+      const country=document.getElementById('vfmCountry').value.trim();
+      let valid=true;
+      const check=(fid,val,test,errId)=>{
+        const el=document.getElementById(fid), err=document.getElementById(errId);
+        const ok=test(val);
+        el.classList.toggle('error',!ok);el.classList.toggle('valid',ok);
+        if(err)err.classList.toggle('show',!ok);
+        if(!ok)valid=false;
+      };
+      check('vfmFirst',first,v=>v.length>0,'errFirst');
+      check('vfmLast',last,v=>v.length>0,'errLast');
+      check('vfmEmail',email,v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),'errEmail');
+      check('vfmCountry',country,v=>v.length>0,'errCountry');
+
+      // ★ CHANGE 2: also validate nominee selection for award votes
+      if(pendingType==='award' && pendingAwNomineeIdx===null){
+        showToast('⚠ Please select a nominee to vote for.');
+        valid=false;
+      }
+      return valid;
+    }
+
+    // ★ CHANGE 2: Build nominee selector in modal
+    function buildNomineeSelector(awid){
+      const wrap=document.getElementById('vfmNomineeSelectWrap');
+      const optContainer=document.getElementById('vfmNomineeOptions');
+      optContainer.innerHTML='';
+      pendingAwNomineeIdx=null;
+      const aw=awards.find(a=>a.id===awid);
+      if(!aw){wrap.style.display='none';return;}
+      wrap.style.display='block';
+      aw.nominees.forEach((n,ni)=>{
+        const opt=document.createElement('div');
+        opt.className='vfm-nominee-option';
+        opt.dataset.idx=ni;
+        const avatarInner=n.photo?`<img src="${n.photo}" alt="${n.name}">`:(n.initials||'?');
+        opt.innerHTML=`
+          <div class="vfm-nom-radio"></div>
+          <div class="vfm-nom-av">${avatarInner}</div>
+          <div style="flex:1;">
+            <div class="vfm-nom-name">${n.name}${n.leading?' 👑':''}</div>
+            <div class="vfm-nom-detail">${n.detail}</div>
+          </div>
+          <div class="vfm-nom-votes">${fmt(n.votes)} votes</div>`;
+        opt.addEventListener('click',()=>{
+          document.querySelectorAll('.vfm-nominee-option').forEach(o=>o.classList.remove('selected'));
+          opt.classList.add('selected');
+          pendingAwNomineeIdx=ni;
+          // Update candidate preview
+          document.getElementById('vfmCandidateName').textContent=n.name;
+          document.getElementById('vfmCandidateSub').textContent=aw.title;
+          const av=document.getElementById('vfmAvatar');
+          av.innerHTML=n.photo?`<img src="${n.photo}" alt="${n.name}">`:(n.initials||'?');
+        });
+        optContainer.appendChild(opt);
+      });
+    }
+
+    function openVoteForm(type,id,name,photo,initials,sub,awid){
+      pendingType=type;
+      pendingAwNomineeIdx=null;
+      if(type==='contestant') pendingId=id;
+      else { pendingAwId=awid||id; }
+
+      document.getElementById('vfmCandidateName').textContent=name;
+      document.getElementById('vfmCandidateSub').textContent=sub||'CONBRIO 2026';
+      const av=document.getElementById('vfmAvatar');
+      av.innerHTML=photo?`<img src="${photo}" alt="${name}">`:(initials||'?');
+
+      // Show/hide nominee selector
+      if(type==='award'){
+        buildNomineeSelector(awid||id);
+      } else {
+        document.getElementById('vfmNomineeSelectWrap').style.display='none';
+      }
+
+      // Reset fields
+      ['vfmFirst','vfmLast','vfmEmail','vfmCountry'].forEach(fid=>{
+        const el=document.getElementById(fid);
+        if(el){el.value='';el.classList.remove('error','valid');}
+      });
+      document.querySelectorAll('.vfm-error-msg').forEach(e=>e.classList.remove('show'));
+      document.getElementById('stepNum1').textContent='1';
+      setStep(1);
+      document.getElementById('voteFormModal').classList.add('open');
+    }
+
+    function closeVoteForm(){
+      document.getElementById('voteFormModal').classList.remove('open');
+      setTimeout(()=>{document.getElementById('stepNum1').textContent='1';},350);
+    }
+
+    document.getElementById('vfmClose')?.addEventListener('click',closeVoteForm);
+    document.getElementById('voteFormModal')?.addEventListener('click',e=>{
+      if(e.target===document.getElementById('voteFormModal'))closeVoteForm();
+    });
+
+    document.getElementById('vfmNext')?.addEventListener('click',()=>{
+      if(validateStep1()) setStep(2);
+      else if(pendingType==='award'&&pendingAwNomineeIdx===null) return;
+      else showToast('⚠ Please complete all required fields correctly.');
+    });
+    document.getElementById('vfmBack')?.addEventListener('click',()=>setStep(1));
+
+    document.getElementById('vfmSubmit')?.addEventListener('click',()=>{
+      closeVoteForm();
+
+      if(pendingType==='contestant'){
+        const id=pendingId;
+        if(votedC.has(id)){showToast('⚠ You have already voted for this contestant. One vote per person is permitted.');return;}
+        votedC.add(id);saveVotedC(votedC);
+        voteCounts[id]+=1;
+        animateNum(document.getElementById('vc-'+id),voteCounts[id]);
+        const maxNow=Math.max(...Object.values(voteCounts));
+        contestants.forEach(c=>{const fill=document.getElementById('vb-'+c.id);if(fill)fill.style.width=(voteCounts[c.id]/maxNow*100)+'%';});
+        const btn=document.querySelector('.vote-btn[data-contestant="'+id+'"]');
+        if(btn){btn.textContent='✓ Voted';btn.classList.add('voted');btn.closest('.contestant-card').classList.add('voted-card');}
+        // Update spotlight button if Rohit (id=1)
+        if(id===1){
+          const sv=document.getElementById('spotlightVotes');if(sv)sv.textContent=fmtFull(voteCounts[1]);
+          const spBtn=document.getElementById('spotlightVoteBtn');
+          if(spBtn){spBtn.textContent='✓ Voted for Rohit';spBtn.style.opacity='.7';spBtn.disabled=true;}
+        }
+        updateTotalVotes();
+        showToast('✅ Your official vote has been recorded. Thank you for supporting CONBRIO 2026!');
+
+      } else {
+        const awid=pendingAwId;
+        if(votedA.has(awid)){showToast('⚠ You have already voted in this category. Duplicate votes are not counted.');return;}
+        votedA.add(awid);saveVotedA(votedA);
+
+        // ★ CHANGE 2: Vote goes to the selected nominee, not always the leader
+        const aw=awards.find(a=>a.id===awid);
+        const chosenIdx = pendingAwNomineeIdx!==null ? pendingAwNomineeIdx : aw.nominees.findIndex(n=>n.leading===true);
+        if(chosenIdx!==-1){
+          aw.nominees[chosenIdx].votes+=1;
+          const countEl=document.getElementById('av-'+awid+'-'+chosenIdx);
+          if(countEl)animateNum(countEl,aw.nominees[chosenIdx].votes);
+          const maxNom=Math.max(...aw.nominees.map(n=>n.votes));
+          const cardEl=document.querySelector('[data-award-id="'+awid+'"]');
+          if(cardEl)cardEl.querySelectorAll('.nominee-bar-fill').forEach((fill,fi)=>{fill.style.width=(aw.nominees[fi].votes/maxNom*100)+'%';});
+        }
+        const btn=document.querySelector('.award-vote-btn[data-award="'+awid+'"]');
+        if(btn){btn.textContent='✓ Voted';btn.classList.add('voted');}
+        updateTotalVotes();
+        showToast('✅ Your award vote has been officially recorded. Thank you!');
+      }
+    });
+
+    // ★ CHANGE 1: Spotlight vote button
+    document.getElementById('spotlightVoteBtn')?.addEventListener('click',()=>{
+      if(VOTING_CLOSED){showToast('🔒 Voting has closed. Thank you to all who participated.');return;}
+      if(votedC.has(1)){showToast('⚠ You have already voted for Rohit Kshetri. One vote per person is permitted.');return;}
+      const c=contestants.find(x=>x.id===1);
+      openVoteForm('contestant',1,c.name,c.photo,c.initials,c.genre+' · Nepal');
+    });
+
+    // BUILD CONTESTANTS - Full Background Showcase
+    function buildContestants(){
+      const grid=document.getElementById('contestantsGrid');if(!grid)return;
+      const rohit=contestants.find(c=>c.name==='Rohit Kshetri');
+      if(!rohit)return;
+      
+      grid.style.cssText='position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--black);';
+      
+      const bgImg=document.createElement('img');
+      bgImg.src=rohit.photo;
+      bgImg.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0.25;z-index:0;';
+      grid.appendChild(bgImg);
+      
+      const overlay=document.createElement('div');
+      overlay.style.cssText='position:absolute;inset:0;background:linear-gradient(135deg,rgba(9,9,11,.8),rgba(191,48,48,.15));z-index:1;';
+      grid.appendChild(overlay);
+      
+      const content=document.createElement('div');
+      content.className='reveal-up';
+      content.style.cssText='position:relative;z-index:2;text-align:center;max-width:700px;padding:2rem;';
+      content.innerHTML=`
+        <div style="font-size:4.5rem;margin-bottom:1rem;filter:drop-shadow(0 0 20px var(--gold));">👑</div>
+        <div style="font-family:var(--font-ui);font-size:.85rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;font-weight:700;">CONBRIO CHAMPION 2026</div>
+        <h1 style="font-family:var(--font-d);font-size:clamp(3rem,12vw,5.5rem);font-weight:900;color:var(--white);margin-bottom:1rem;letter-spacing:-.03em;line-height:1;">${rohit.name}</h1>
+        <div style="font-family:var(--font-ui);font-size:1.1rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;font-weight:600;">${rohit.genre}</div>
+        <div style="height:2px;width:60px;background:var(--red);margin:2rem auto;opacity:.5;"></div>
+        <p style="font-size:1.05rem;color:var(--white2);line-height:1.95;margin-bottom:2rem;opacity:.95;font-weight:300;">
+          A virtuoso pianist with extraordinary technical mastery and profound musical interpretation. Rohit's performances showcase brilliant clarity, emotional depth, and an unmatched ability to captivate audiences worldwide.
+        </p>
+        <div style="padding:2rem;background:rgba(191,48,48,.2);border:1px solid rgba(191,48,48,.4);border-radius:12px;backdrop-filter:blur(10px);">
+          <div style="font-size:.9rem;color:var(--muted);margin-bottom:.8rem;text-transform:uppercase;letter-spacing:.1em;font-weight:600;">Recognition</div>
+          <div style="font-family:var(--font-d);font-size:2.5rem;font-weight:900;color:var(--gold);margin-bottom:.5rem;">${fmtFull(rohit.votes)}</div>
+          <div style="font-size:.9rem;color:var(--white2);letter-spacing:.08em;">Global Votes</div>
+        </div>
+      `;
+      grid.appendChild(content);
+    }
+
+    // BUILD AWARDS - Clean Grid Design
+    function buildAwards(){
+      const grid=document.getElementById('awardsGrid');if(!grid)return;
+      const rohitAchievements=[
+        {icon:'🎹',title:'Best Jazz Performance',desc:'Finest jazz improvisation and artistry',color:'#d93545'},
+        {icon:'🎼',title:'Outstanding Classical Interpretation',desc:'Mastery of the classical repertoire',color:'#e74c3c'},
+        {icon:'👑',title:'Pianist of the Year',desc:'The highest CONBRIO honour',color:'#ff6b5a'},
+        {icon:'✍️',title:'Best Original Composition',desc:'Excellence in contemporary composition',color:'#c9963a'},
+        {icon:'⭐',title:'Rising Star Award',desc:'Recognition for emerging talent',color:'#e8b84b'},
+        {icon:'🌍',title:'Best World / Fusion Performance',desc:'Excellence in world and fusion music',color:'#d93545'}
+      ];
+      rohitAchievements.forEach((ach,i)=>{
+        const card=document.createElement('div');
+        card.className='award-card reveal-up';
+        card.style.transitionDelay=(i*.08)+'s';
+        card.innerHTML=`
+          <div class="award-header">
+            <div class="award-icon">${ach.icon}</div>
+            <div style="flex:1;">
+              <h3 class="award-title">${ach.title}</h3>
+              <p class="award-desc">${ach.desc}</p>
+            </div>
+          </div>
+          <div style="padding:0 2rem 2rem;">
+            <div style="padding:.8rem 1rem;background:rgba(191,48,48,.08);border-left:3px solid ${ach.color};border-radius:6px;">
+              <div style="font-size:.75rem;color:rgba(244,239,232,.6);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:.4rem;">Recognition Status</div>
+              <div style="font-family:var(--font-d);font-size:1.4rem;font-weight:900;color:${ach.color};">Winner</div>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    // BUILD GALLERY
+    function buildGallery(){
+      const grid=document.getElementById('galleryGrid');if(!grid)return;
+      galleryData.forEach((item,i)=>{
+        const div=document.createElement('div');
+        div.className=`gallery-item reveal-up${item.wide?' wide':''}`;
+        div.style.transitionDelay=(i*.07)+'s';
+        div.innerHTML=`
+          <div class="gallery-inner">
+            <img src="${item.img}" alt="${item.label}" onload="this.classList.add('loaded')" onerror="this.style.display='none'"/>
+            <div class="gallery-placeholder">
+              <div class="gallery-ph-bg"></div>
+              <div class="gallery-emoji">${item.emoji}</div>
+              <div class="gallery-label">${item.label}</div>
+              
+            </div>
+            <div class="gallery-overlay"><span class="gallery-caption">📸 ${item.caption}</span></div>
+          </div>
+          <div class="gallery-num">${String(i+1).padStart(2,'0')}</div>`;
+        grid.appendChild(div);
+      });
+    }
+
+    // BUILD TESTIMONIALS
+    function buildTestimonials(){
+      const grid=document.getElementById('testimonialsGrid');if(!grid)return;
+      const testimonials=[
+        {
+          name:'Yuki Yamamoto',
+          title:'Virtuoso Pianist · Japan',
+          emoji:'🎹',
+          quote:'Rohit\'s performance transcends technical mastery — it\'s a dialogue between artist and instrument. His championship is well-deserved. A true inspiration to pianists worldwide.'
+        },
+        {
+          name:'Sofia Abramovic',
+          title:'Contemporary Composer · Serbia',
+          emoji:'🎼',
+          quote:'What impressed me most was Rohit\'s ability to blend genres seamlessly. His jazz improvisation has a classical foundation, his classical playing has jazz soul. Extraordinary.'
+        },
+        {
+          name:'Marcus Stone',
+          title:'Jazz Legend · USA',
+          emoji:'🎺',
+          quote:'In 30 years of performing, I\'ve encountered few pianists with Rohit\'s creativity and emotional depth. He\'s not just playing notes — he\'s speaking with his fingers. Champions indeed.'
+        },
+        {
+          name:'Marie Laurent',
+          title:'Concert Pianist · France',
+          emoji:'🌹',
+          quote:'Rohit\'s championship victory is a proud moment for classical music. His interpretation brings fresh perspective while respecting tradition. A beacon for the next generation.'
+        },
+        {
+          name:'Rajesh Menon',
+          title:'Music Director · India',
+          emoji:'🎶',
+          quote:'To see a South Asian artist achieve this pinnacle at CONBRIO fills my heart with pride. Rohit represents the future of global classical music. Utterly brilliant!'
+        }
+      ];
+      testimonials.forEach((t,i)=>{
+        const card=document.createElement('div');
+        card.className='testimonial-card reveal-up';
+        card.style.transitionDelay=(i*.12)+'s';
+        card.innerHTML=`
+          <div class="testimonial-quote">"${t.quote}"</div>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">${t.emoji}</div>
+            <div class="testimonial-info">
+              <h4>${t.name}</h4>
+              <p>${t.title}</p>
+            </div>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    // CELEBRATION - CONFETTI EFFECT
+    function createConfetti(){
+      const colors=['#bf3030','#d93a3a','#c9963a','#e8b84b','#f4efe8'];
+      const duration=3000+Math.random()*2000;
+      for(let i=0;i<80;i++){
+        setTimeout(()=>{
+          const confetti=document.createElement('div');
+          confetti.className='confetti';
+          confetti.style.left=Math.random()*window.innerWidth+'px';
+          confetti.style.top='-10px';
+          confetti.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+          confetti.style.borderRadius=Math.random()>.5?'50%':'0';
+          document.body.appendChild(confetti);
+          confetti.style.animation=`confettiFall ${2+Math.random()*2}s linear`;
+          setTimeout(()=>confetti.remove(),5000);
+        },i*30);
+      }
+    }
+
+    // SHARE MODAL
+    const shareModal=document.getElementById('shareModal');
+    function openShareModal(name,votes){
+      document.getElementById('shareText').textContent=`I just voted for ${name} at CONBRIO 2026 — Singapore's premier piano competition! They currently have ${fmt(votes)} votes. Voting closes March 26 — join me and vote now!`;
+      shareModal.classList.add('open');
+    }
+    document.getElementById('shareClose')?.addEventListener('click',()=>shareModal.classList.remove('open'));
+    shareModal?.addEventListener('click',e=>{if(e.target===shareModal)shareModal.classList.remove('open');});
+    document.getElementById('shareTwitter')?.addEventListener('click',()=>{window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(document.getElementById('shareText').textContent+' #CONBRIO2026 #Piano')}`,'_blank');});
+    document.getElementById('shareWhatsapp')?.addEventListener('click',()=>{window.open(`https://wa.me/?text=${encodeURIComponent(document.getElementById('shareText').textContent+' conbrio2026.com')}`,'_blank');});
+    document.getElementById('shareCopy')?.addEventListener('click',function(){navigator.clipboard.writeText(document.getElementById('shareText').textContent+' conbrio2026.com').then(()=>{this.textContent='✓ Copied!';setTimeout(()=>{this.textContent='Copy Link';},2000);});});
+    document.querySelectorAll('.share-btn').forEach(btn=>btn.addEventListener('click',()=>openShareModal(btn.dataset.name,parseInt(btn.dataset.votes))));
+
+    // NEWSLETTER
+    document.querySelector('.newsletter-btn')?.addEventListener('click',()=>{
+      const input=document.querySelector('.newsletter-input');
+      if(input&&input.value.includes('@')){const btn=document.querySelector('.newsletter-btn');btn.textContent='✓ Subscribed!';input.value='';setTimeout(()=>{btn.textContent='Subscribe →';},3000);}
+      else if(input){input.style.borderColor='var(--red)';setTimeout(()=>{input.style.borderColor='';},1500);}
+    });
+
+    // COOKIE
+    (function(){
+      const cookiePref=localStorage.getItem('conbrio_cookies');
+      const bar=document.getElementById('cookieBar');
+      if(!cookiePref&&bar)setTimeout(()=>bar.classList.add('show'),1200);
+      function dismiss(pref){localStorage.setItem('conbrio_cookies',pref);if(bar){bar.classList.remove('show');setTimeout(()=>bar.style.display='none',600);}}
+      document.getElementById('cookieAccept')?.addEventListener('click',()=>dismiss('all'));
+      document.getElementById('cookieDecline')?.addEventListener('click',()=>dismiss('essential'));
+      document.getElementById('cookieManage')?.addEventListener('click',()=>alert('Cookie preferences — connect your CMP here.'));
+    })();
+
+    // SCROLL REVEAL
+    function initReveal(){
+      const obs=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('revealed');obs.unobserve(entry.target);}});},{threshold:0.1});
+      document.querySelectorAll('.reveal-up,.reveal-left,.reveal-right').forEach(el=>obs.observe(el));
+    }
+
+    // PARALLAX
+    window.addEventListener('scroll',()=>{
+      const h=document.querySelector('.hero-content'),sy=window.scrollY;
+      if(h&&sy<window.innerHeight){h.style.transform=`translateY(${sy*.28}px)`;h.style.opacity=String(Math.max(0,1-sy/(window.innerHeight*.65)));}
+    });
+
+    // INIT
+    document.addEventListener('DOMContentLoaded',()=>{
+      buildContestants();buildAwards();buildTestimonials();buildGallery();
+      updateTotalVotes();
+      setTimeout(initReveal,120);
+      setTimeout(createConfetti,800);
+      // Vote simulation disabled - display only final totals
+    });
+  </script>
+</body>
+</html>
